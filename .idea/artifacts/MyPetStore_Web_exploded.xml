@@ -1,0 +1,53 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MyPetStore:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyPetStore_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="MyPetStore/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MyPetStore" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jakarta.servlet.jsp.jstl-api-2.0.0" />
+          <element id="library" level="project" name="jsp-api" />
+          <element id="library" level="project" name="Maven: cn.hutool:hutool-all:5.8.21" />
+          <element id="library" level="project" name="Maven: com.alibaba.fastjson2:fastjson2-extension-spring6:2.0.41" />
+          <element id="library" level="project" name="Maven: com.alibaba.fastjson2:fastjson2-extension:2.0.41" />
+          <element id="library" level="project" name="Maven: com.alibaba.fastjson2:fastjson2:2.0.41" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid-spring-boot-starter:1.2.6" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.2.6" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: com.sun.activation:jakarta.activation:2.0.1" />
+          <element id="library" level="project" name="Maven: com.sun.mail:jakarta.mail:2.0.1" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.13.0" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+          <element id="library" level="project" name="Maven: io.lettuce:lettuce-core:6.2.6.RELEASE" />
+          <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-native-unix-common:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.96.Final" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-core:3.4.32" />
+          <element id="library" level="project" name="Maven: jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.1" />
+          <element id="library" level="project" name="Maven: jakarta.servlet:jakarta.servlet-api:6.0.0" />
+          <element id="library" level="project" name="Maven: junit:junit:3.8.1" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.28" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.32" />
+          <element id="library" level="project" name="Maven: org.mapstruct:mapstruct:1.5.5.Final" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.20" />
+          <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.4" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.12.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:1.5.12.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.16.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.16.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.16.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.16.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.16.RELEASE" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
