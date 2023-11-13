@@ -4,43 +4,30 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import org.csu.mypetstore.constant.enums.ResultCodeEnum;
 import org.csu.mypetstore.domain.Account;
-import org.csu.mypetstore.domain.Cart;
-import org.csu.mypetstore.domain.Item;
+import org.csu.mypetstore.domain.RestResponse;
+import org.csu.mypetstore.service.CartService;
 
 import java.io.IOException;
-
+//做成restful接口
 public class RemoveItemFromCartServlet extends HttpServlet {
-
-    private static final String VIEW_CART = "/WEB-INF/jsp/cart/Cart.jsp";
-    private static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
-
-    private String workingItemId;
-    private Cart cart;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        workingItemId = request.getParameter("workingItemId");
-
-        HttpSession session = request.getSession();
-        cart = (Cart)session.getAttribute("cart");
-
-        Item item = cart.removeItemById(workingItemId);
-
-        if(item == null) {
-            session.setAttribute("message", "Attempted to remove null CartItem from Cart.");
-
-            Account account = (Account)session.getAttribute("account");
-            request.getRequestDispatcher(ERROR).forward(request, response);
-        }else{
-
-            Account account = (Account)session.getAttribute("account");
-
-            request.getRequestDispatcher(VIEW_CART).forward(request, response);
-        }
+        RestResponse restResponse = new RestResponse();
+        String itemId = request.getParameter("itemId");
+        Account account = (Account) request.getSession().getAttribute("account");
+        String username = account.getUsername();
+        //删除购物车中的商品
+        CartService.deleteCartItem(username,itemId);
+        restResponse.setCode(ResultCodeEnum.SUCCESS);
+        restResponse.insertLoading("message","删除成功");
+        response.getWriter().println(restResponse.ToJsonStr());
+        //close
+        response.getWriter().close();
     }
 }

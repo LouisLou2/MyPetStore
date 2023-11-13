@@ -5,20 +5,13 @@
   Time: 15:25
   To change this template use File | Settings | File Templates.
 --%>
-</div>
-
-<div id="Footer">
-    <div id="PoweredBy">&nbsp<a href="www.csu.edu.cn">www.csu.edu.cn</a>
+<div class="container-fluid">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Powered By CSU 2022
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-
-    <!--列出用户喜欢的标题-->
-    <div id="Banner">
-        <c:if test="${sessionScope.account.bannerOption} != null">
-         ${sessionScope.account.bannername}
-        </c:if>
-    </div>
-
 </div>
-
 </body>
 </html>

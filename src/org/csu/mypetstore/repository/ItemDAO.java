@@ -7,7 +7,7 @@ import java.util.List;
 public interface ItemDAO {
     int PAGE_SIZE = 10;
     int getItemCount(String productId);
-    void updateInventoryQuantity(String itemId,int increment);
+    void decrementInventoryQuantity(String itemId,int increment);
 
     int getInventoryQuantity(String itemId);
 

@@ -22,5 +22,4 @@ public class Item implements Serializable {
   private String attribute5;
   private Product product;
   private int quantity;
-
 }

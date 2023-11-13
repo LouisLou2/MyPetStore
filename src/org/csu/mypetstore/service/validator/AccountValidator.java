@@ -1,6 +1,7 @@
 package org.csu.mypetstore.service.validator;
 
 import org.csu.mypetstore.repository.RedisCache;
+import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.utils.FormatUtil;
 
 import java.util.HashMap;
@@ -28,20 +29,38 @@ public class AccountValidator {
         }
         return false;
     }
-    public static Map<String,String> CheckRegisterParams(Map<String,String> params){
+    public static Map<String,String> CheckRegisterParams(Map<String,Object> params){
         HashMap<String,String> errorinfo=new HashMap<>();
-        for(Map.Entry<String,String> entry:params.entrySet()){
+        for(Map.Entry<String,Object> entry:params.entrySet()){
             String key=entry.getKey();
-            String value=entry.getValue();
-            if(value==null||value.equals("")){
-                errorinfo.put(key,"不能为空");
+            Object value=entry.getValue();
+            if(value==null|| value.toString().isEmpty()){
+                errorinfo.put(key,"can not be empty");
             }
         }
-        if(!FormatUtil.checkEmail(params.get("email"))){
-            errorinfo.put("email","邮箱格式不正确");
+        if(!FormatUtil.checkEmail((String) params.get("email"))){
+            errorinfo.put("email","invalid email address");
         }
-        if(!FormatUtil.checkPhone(params.get("phone"))){
-            errorinfo.put("phone","手机号格式不正确");
+        if(!FormatUtil.checkPhone((String) params.get("phone"))){
+            errorinfo.put("phone","invalid phone number");
+        }
+        String username= (String) params.get("username");
+        if(username!=null){
+            if(AccountService.isExist(username)){
+                errorinfo.put("username","username already exist");
+            }
+        }
+        String email= (String) params.get("email");
+        if(email!=null){
+            if(AccountService.isEmailExist(email)){
+                errorinfo.put("email","email already exist");
+            }
+        }
+        String phone= (String) params.get("phone");
+        if(phone!=null){
+            if(AccountService.isPhoneExist(phone)){
+                errorinfo.put("phone","phone already exist");
+            }
         }
         return errorinfo;
     }

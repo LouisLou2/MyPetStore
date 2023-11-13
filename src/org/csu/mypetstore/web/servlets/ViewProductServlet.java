@@ -22,7 +22,6 @@ public class ViewProductServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         productId = request.getParameter("productId");
-        
         Product product = CatalogService.getProduct(productId);
         List<Item> itemList = CatalogService.getItemListByProductWithPage(productId, 1);
         int totalPage = CatalogService.getItemTotalPage(productId);

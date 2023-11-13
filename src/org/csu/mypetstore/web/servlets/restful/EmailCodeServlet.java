@@ -1,4 +1,4 @@
-package org.csu.mypetstore.web.servlets;
+package org.csu.mypetstore.web.servlets.restful;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,11 +22,13 @@ public class EmailCodeServlet extends HttpServlet{
             String numcode= VerifyUtil.getVerifyCodeNumber();
             RedisCache.setEmailCode(numcode,email);
             VerifiyService.SendEmailVerifyCode(email,numcode);
+            restResponse.setCode(ResultCodeEnum.SUCCESS);
         }catch(Exception e){
             restResponse.setCode(ResultCodeEnum.FAIL);
             restResponse.insertLoading("error", e.getMessage());
-            resp.getWriter().write(restResponse.ToJsonStr());
         }
+        resp.getWriter().write(restResponse.ToJsonStr());
+        resp.getWriter().close();
     }
 
     @Override

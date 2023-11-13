@@ -80,7 +80,9 @@ public class CatalogService {
     public static Item getItem(String itemId) {
         return itemDAO.getItem(itemId);
     }
-
+    public static int getInventoryQuantity(String itemId) {
+        return itemDAO.getInventoryQuantity(itemId);
+    }
     public static boolean isItemInStock(String itemId) {
         return itemDAO.getInventoryQuantity(itemId) > 0;
     }

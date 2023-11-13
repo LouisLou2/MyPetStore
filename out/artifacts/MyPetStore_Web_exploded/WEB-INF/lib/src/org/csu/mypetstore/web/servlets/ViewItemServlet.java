@@ -4,7 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.service.CatalogService;
 
@@ -20,15 +19,8 @@ public class ViewItemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         itemId = request.getParameter("itemId");
-        CatalogService service = new CatalogService();
-        Item item = service.getItem(itemId);
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("item", item);
-        
-        String picture = CatalogService.getPictureLocation(item.getProduct().getProductId());
-        request.setAttribute("picture", picture);
-        
+        Item item = CatalogService.getItem(itemId);
+        request.setAttribute("item", item);
         request.getRequestDispatcher(VIEW_ITEM).forward(request, response);
     }
 }

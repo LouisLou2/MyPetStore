@@ -28,6 +28,15 @@
         <filter-name>ShopFilter</filter-name>
         <url-pattern>/shop/*</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
     </filter-mapping>
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>org.csu.mypetstore.web.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/rest/shop/addcart/*</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
     
     <servlet>
         <servlet-name>MainServlet</servlet-name>
@@ -58,6 +67,16 @@
     <servlet-mapping>
         <servlet-name>CategoryInfoServlet</servlet-name>
         <url-pattern>/rest/shop/view/category</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderInfoServlet</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.OrderInfoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OrderInfoServlet</servlet-name>
+        <url-pattern>/rest/shop/view/orderlist</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -105,7 +124,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AddItemToCartServlet</servlet-name>
-        <url-pattern>/shop/addcart/item</url-pattern>
+        <url-pattern>/rest/shop/addcart/item</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -123,7 +142,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>RemoveItemFromCartServlet</servlet-name>
-        <url-pattern>/shop/removecart/item</url-pattern>
+        <url-pattern>/rest/shop/removecart/item</url-pattern>
     </servlet-mapping>
 
     <!--更新购物车数量-->
@@ -153,7 +172,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SignInServlet</servlet-name>
-        <url-pattern>/account/signin</url-pattern>
+        <url-pattern>/rest/account/signin</url-pattern>
     </servlet-mapping>
     
     <!--登出账户-->
@@ -245,6 +264,15 @@
         <servlet-name>ConfirmOrderFormServlet</servlet-name>
         <url-pattern>/page/shop/confirm/order</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConfirmOrderServlet</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.ConfirmOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmOrderServlet</servlet-name>
+        <url-pattern>/rest/shop/confirm/order</url-pattern>
+    </servlet-mapping>
     
     <!--查看最终订单-->
     <servlet>
@@ -283,16 +311,16 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>VerificationCodeServlet</servlet-name>
-        <url-pattern>/verify/get_img_code</url-pattern>
+        <url-pattern>/rest/verify/get_img_code</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>EmailCodeServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.EmailCodeServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.EmailCodeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EmailCodeServlet</servlet-name>
-        <url-pattern>/verify/get_email_code</url-pattern>
+        <url-pattern>/rest/verify/get_email_code</url-pattern>
     </servlet-mapping>
     
     <!--参数检验-->
@@ -324,12 +352,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UsernameIsExistServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.UsernameIsExistServlet</servlet-class>
+        <servlet-name>CheckExistServlet</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.CheckExistServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UsernameIsExistServlet</servlet-name>
-        <url-pattern>/usernameIsExistServlet</url-pattern>
+        <servlet-name>CheckExistServlet</servlet-name>
+        <url-pattern>/rest/account/check/exist</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -343,7 +371,7 @@
 
     <servlet>
         <servlet-name>UpdateCartJSServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.UpdateCartJSServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.UpdateCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateCartJSServlet</servlet-name>

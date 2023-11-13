@@ -4,8 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.csu.mypetstore.domain.Account;
 
 import java.io.IOException;
 
@@ -18,8 +16,6 @@ public class MainServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account)session.getAttribute("account");
         request.getRequestDispatcher(MAIN).forward(request,response);
     }
 }

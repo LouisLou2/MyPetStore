@@ -14,13 +14,14 @@ import org.csu.mypetstore.domain.RestResponse;
 import org.csu.mypetstore.repository.RedisCache;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.validator.AccountValidator;
+import org.csu.mypetstore.utils.URLHelper;
 
 import java.io.IOException;
 
 public class SignInServlet extends HttpServlet {
     private static final String MAIN = "/WEB-INF/jsp/catalog/Main.jsp";
     private static final String SIGNONFORM = "/WEB-INF/jsp/account/SignonForm.jsp";
-    private static final String MAIN_SERVLET = AppProperties.APP_ROOT+"/main";
+    private static final String MAIN_SERVLET = "/main";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -53,18 +54,26 @@ public class SignInServlet extends HttpServlet {
         RedisCache.setModelById(account.getUsername(), MarkerEnum.USER_ID, account);
         
         restResponse.setCode(ResultCodeEnum.SUCCESS);
-        String theLocation=(session.getAttribute("originalLink")==null)?MAIN_SERVLET:(String) session.getAttribute("originalLink");
-        restResponse.setLocation(theLocation);
+        String fullOriginalLink=null;
+        //注意，登录携带的参数是originalLink，是相对于APP_ROOT的路径。现在将他转换为绝对路径
+        String originalLinkInRequest = request.getParameter("originalLink");
+        if(!originalLinkInRequest.equals("null")){
+            fullOriginalLink= URLHelper.getLocationWithRoot(originalLinkInRequest);
+            request.removeAttribute("originalLink");
+            session.removeAttribute("originalLink");
+        }else{
+            String originalLinkInSession = (String) session.getAttribute("originalLink");
+            if(originalLinkInSession!=null){
+                fullOriginalLink= URLHelper.getLocationWithRoot(originalLinkInSession);
+                session.removeAttribute("originalLink");
+            }
+        }
+        if(fullOriginalLink!=null) {
+            restResponse.setLocation(fullOriginalLink);
+        }else{
+            restResponse.setLocation(AppProperties.APP_ROOT+MAIN_SERVLET);
+        }
         response.getWriter().write(restResponse.ToJsonStr());
         response.getWriter().close();
-        //if(account != null){
-        //    HttpServletRequest httpRequest= request;
-        //    String strBackUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
-        //            + httpRequest.getContextPath() + httpRequest.getServletPath() + "?" + (httpRequest.getQueryString());
-        //
-        //    LogService logService = new LogService();
-        //    String logInfo = logService.logInfo(" ") + strBackUrl + " 用户登录";
-        //    logService.insertLogInfo(account.getUsername(), logInfo);
-        //}
     }
 }

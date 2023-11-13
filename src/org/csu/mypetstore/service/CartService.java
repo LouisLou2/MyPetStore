@@ -2,6 +2,7 @@ package org.csu.mypetstore.service;
 
 import org.csu.mypetstore.constant.enums.PageCapacityEnum;
 import org.csu.mypetstore.domain.CartItem;
+import org.csu.mypetstore.domain.Dto.CartItemDto;
 import org.csu.mypetstore.repository.CartItemDAO;
 import org.csu.mypetstore.repository.Impl.CartItemDAOImpl;
 
@@ -21,5 +22,20 @@ public class CartService {
     }
     public static List<CartItem> getCartItemListWithPage(String username, int page){
         return cartDAO.getCartItemListWithPage(username,page);
+    }
+    public static List<CartItem> getCartItemList(String username){
+        return cartDAO.getCartItemList(username);
+    }
+    public static void insertCartItem(String username, CartItemDto cartItemDto) {
+        cartDAO.SmartAddCartItem(username,cartItemDto);
+    }
+    public static void insertCartItem(String username, CartItem cartItem) {
+        cartDAO.insertItem(username,cartItem);
+    }
+    public static void deleteCartItem(String username, String itemId) {
+        cartDAO.deleteItem(username,itemId);
+    }
+    public static void updateCartItemQuantity(String username, String itemId, int quantity) {
+        cartDAO.updateQuantity(username,itemId,quantity);
     }
 }

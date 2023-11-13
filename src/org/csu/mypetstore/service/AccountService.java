@@ -19,7 +19,21 @@ public class AccountService {
         Map<String,String>map= RedisCache.getAccountModelById(username);
         return accountDAO.getAccountByUsername(username);
     }
-    
+    public static boolean isFieldExists(String key, String value){
+        boolean isexist=false;
+        switch (key){
+            case "username":
+                isexist=isExist(value);
+                break;
+            case "email":
+                isexist=isEmailExist(value);
+                break;
+            case "phone":
+                isexist=isPhoneExist(value);
+                break;
+        }
+        return isexist;
+    }
     public static boolean isExist(String username){
         return accountDAO.isExist(username);
     }
@@ -29,7 +43,12 @@ public class AccountService {
         account.setPassword(password);
         return accountDAO.getAccountByUsernameAndPassword(account);
     }
-
+    public static boolean isEmailExist(String email){
+        return accountDAO.isEmailExist(email);
+    }
+    public static boolean isPhoneExist(String phone){
+        return accountDAO.isPhoneExist(phone);
+    }
     public static void insertAccount(Account account) {
         accountDAO.insertAccount(account);
         accountDAO.insertProfile(account);

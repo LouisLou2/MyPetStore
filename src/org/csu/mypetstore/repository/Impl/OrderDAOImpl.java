@@ -1,5 +1,6 @@
 package org.csu.mypetstore.repository.Impl;
 
+import org.csu.mypetstore.constant.enums.PageCapacityEnum;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.repository.OrderDAO;
 import org.csu.mypetstore.utils.DBUtil;
@@ -43,6 +44,39 @@ public class OrderDAOImpl implements OrderDAO {
             "    WHERE ORDERS.USERID = ?" +
             "    AND ORDERS.ORDERID = ORDERSTATUS.ORDERID" +
             "    ORDER BY ORDERDATE";
+    
+    private static final String getOrdersByUsernameWithPageString = "SELECT" +
+            "      BILLADDR1 AS billAddress1," +
+            "      BILLADDR2 AS billAddress2," +
+            "      BILLCITY," +
+            "      BILLCOUNTRY," +
+            "      BILLSTATE," +
+            "      BILLTOFIRSTNAME," +
+            "      BILLTOLASTNAME," +
+            "      BILLZIP," +
+            "      SHIPADDR1 AS shipAddress1," +
+            "      SHIPADDR2 AS shipAddress2," +
+            "      SHIPCITY," +
+            "      SHIPCOUNTRY," +
+            "      SHIPSTATE," +
+            "      SHIPTOFIRSTNAME," +
+            "      SHIPTOLASTNAME," +
+            "      SHIPZIP," +
+            "      CARDTYPE," +
+            "      COURIER," +
+            "      CREDITCARD," +
+            "      EXPRDATE AS expiryDate," +
+            "      LOCALE," +
+            "      ORDERDATE," +
+            "      ORDERS.ORDERID," +
+            "      TOTALPRICE," +
+            "      USERID AS username," +
+            "      STATUS" +
+            "    FROM ORDERS, ORDERSTATUS" +
+            "    WHERE ORDERS.USERID = ?" +
+            "    AND ORDERS.ORDERID = ORDERSTATUS.ORDERID" +
+            "    ORDER BY ORDERDATE" +
+            "    LIMIT ?, ?";
     private static final String getOrderString = "select" +
             "      BILLADDR1 AS billAddress1," +
             "      BILLADDR2 AS billAddress2," +
@@ -81,6 +115,7 @@ public class OrderDAOImpl implements OrderDAO {
             " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String insertOrderStatusString = "INSERT INTO ORDERSTATUS " +
             "(ORDERID, LINENUM, TIMESTAMP, STATUS) VALUES (?, ?, ?, ?)";
+    private static final String getRecordCountString = "SELECT COUNT(*) AS count FROM ORDERS WHERE USERID = ?";
 
     static{
         try{
@@ -139,6 +174,56 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    public List<Order> getOrdersByUsernameWithPage(String username, int page) {
+        List<Order> orderList = new ArrayList<Order>();
+        try{
+            Connection connection = DBUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getOrdersByUsernameWithPageString);
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, (page-1)* PageCapacityEnum.ORDER);
+            preparedStatement.setInt(3, PageCapacityEnum.ORDER);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Order order = new Order();
+
+                order.setBillAddress1(resultSet.getString(1));
+                order.setBillAddress2(resultSet.getString(2));
+                order.setBillCity(resultSet.getString(3));
+                order.setBillCountry(resultSet.getString(4));
+                order.setBillState(resultSet.getString(5));
+                order.setBillToFirstName(resultSet.getString(6));
+                order.setBillToLastName(resultSet.getString(7));
+                order.setBillZip(resultSet.getString(8));
+                order.setShipAddress1(resultSet.getString(9));
+                order.setShipAddress2(resultSet.getString(10));
+                order.setShipCity(resultSet.getString(11));
+                order.setShipCountry(resultSet.getString(12));
+                order.setShipState(resultSet.getString(13));
+                order.setShipToFirstName(resultSet.getString(14));
+                order.setShipToLastName(resultSet.getString(15));
+                order.setShipZip(resultSet.getString(16));
+                order.setCardType(resultSet.getString(17));
+                order.setCourier(resultSet.getString(18));
+                order.setCreditCard(resultSet.getString(19));
+                order.setExpiryDate(resultSet.getString(20));
+                order.setLocale(resultSet.getString(21));
+                order.setOrderDate(resultSet.getDate(22));
+                order.setOrderId(resultSet.getInt(23));
+                order.setTotalPrice(resultSet.getBigDecimal(24));
+                order.setUsername(resultSet.getString(25));
+                order.setStatus(resultSet.getString(26));
+                orderList.add(order);
+            }
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return orderList;
+    }
+
+    @Override
     public Order getOrder(int orderId) {
         Order order = null;
         try{
@@ -183,6 +268,30 @@ public class OrderDAOImpl implements OrderDAO {
             e.printStackTrace();
         }
         return order;
+    }
+
+    @Override
+    public int getRecordCount(String username) {
+        int count = 0;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getRecordCountString);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return count;
     }
 
     @Override

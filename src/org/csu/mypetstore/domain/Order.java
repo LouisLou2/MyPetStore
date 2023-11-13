@@ -12,16 +12,17 @@ import java.util.List;
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 6321792448424424931L;
-
   private int orderId;
   private String username;
   private Date orderDate;
+  
   private String shipAddress1;
   private String shipAddress2;
   private String shipCity;
   private String shipState;
   private String shipZip;
   private String shipCountry;
+  
   private String billAddress1;
   private String billAddress2;
   private String billCity;
@@ -32,6 +33,7 @@ public class Order implements Serializable {
   private BigDecimal totalPrice;
   private String billToFirstName;
   private String billToLastName;
+  
   private String shipToFirstName;
   private String shipToLastName;
   private String creditCard;
@@ -73,13 +75,22 @@ public class Order implements Serializable {
     locale = "CA";
     status = "P";
 
-    Iterator<CartItem> i = cart.getAllCartItems();
+    Iterator<CartItem> i = cart.getCartItems();
     while (i.hasNext()) {
       CartItem cartItem = (CartItem) i.next();
       addLineItem(cartItem);
     }
   }
-
+  public void setShipInfoWithBillInfo(){
+    shipToFirstName = billToFirstName;
+    shipToLastName = billToLastName;
+    shipAddress1 = billAddress1;
+    shipAddress2 = billAddress2;
+    shipCity = billCity;
+    shipState = billState;
+    shipZip = billZip;
+    shipCountry = billCountry;
+  }
   public void addLineItem(CartItem cartItem) {
     LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
     addLineItem(lineItem);

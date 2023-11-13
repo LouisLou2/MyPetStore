@@ -53,4 +53,20 @@
         </div>
     </div>
     <div id="Separator">&nbsp;</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-4">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4  class="alert-heading">Great Deals Now Available!</h4>
+                    <p>Aww yeah, it's not real purchasing.</p>
+                    <hr>
+                    <p class="mb-0">Powered By CSU</p>
+                </div>
+            </div>
+        </div>
+    </div>
 <%@include file="../common/IncludeBottom.jsp"%>

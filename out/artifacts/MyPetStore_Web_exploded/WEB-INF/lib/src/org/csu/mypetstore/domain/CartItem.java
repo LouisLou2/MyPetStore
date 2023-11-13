@@ -1,16 +1,31 @@
 package org.csu.mypetstore.domain;
 
+import lombok.AllArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-
+@AllArgsConstructor
 public class CartItem implements Serializable {
   private static final long serialVersionUID = 6620528781626504362L;
-
   private Item item;
   private int quantity;
   private boolean inStock;
   private BigDecimal total;
+  private long time;
 
+  public CartItem(){
+    this.time = System.currentTimeMillis();
+    this.quantity=1;
+    this.inStock=true;
+    total=new BigDecimal(0);
+  }
+  public long getTime() {
+    return time;
+  }
+  public void setTime(long time){
+    this.time = time;
+  }
+  
   public boolean isInStock() {
     return inStock;
   }

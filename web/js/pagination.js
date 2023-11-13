@@ -9,9 +9,10 @@ var requestUrl;
 var updateFunc;
 var contextPath=document.getElementById("contextPath").innerHTML;
 var functionValt={};
-functionValt["updateCatagoryList"]=updateCatagoryList;
+functionValt["updateCategoryList"]=updateCategoryList;
 functionValt["updateProductList"]=updateProductList;
-function initPaginationRow(arequestUrl,apreparedParams,atableId,aupdateFunc,totalpage,acurrentPage,) {
+functionValt["updateOrderList"]=updateOrderList;
+function initPaginationRow(arequestUrl,atableId,aupdateFunc,totalpage,acurrentPage,apreparedParams=null){
     console.log("initPaginationRow");
     updateFunc=functionValt[aupdateFunc];
     totalPage=parseInt(totalpage);
@@ -92,10 +93,11 @@ function handleClick(event){
     console.log("origin:"+originClicked.innerHTML);
     originClicked=theli;
     //发送请求
+    if(preparedParams==null) preparedParams={};
     preparedParams["page"]=currentPage;
     updateFunc(requestUrl,preparedParams);
 }
-function updateCatagoryList(url,reqParam){
+function updateCategoryList(url,reqParam){
     axios.request({
         url: url,
         method: 'get',
@@ -104,41 +106,36 @@ function updateCatagoryList(url,reqParam){
         if(response.data.loadings.productList==null){
             return;
         }
-        //更新列表
         let table=document.getElementById(tableId);
-        table.innerHTML="";
-        // 创建表头行
-        var tableHeaderRow = document.createElement("tr");
-        // 创建表头单元格
-        var Header1 = document.createElement("th");
-        Header1.textContent = "Product ID";
-        var Header2 = document.createElement("th");
-        Header2.textContent = "Name";
-        // 将表头单元格添加到表头行
-        tableHeaderRow.appendChild(Header1);
-        tableHeaderRow.appendChild(Header2);
-        // 将表头行添加到表格
-        table.appendChild(tableHeaderRow);
-        for(let i=0;i<response.data.loadings.productList.length;++i){
-            var product = response.data.loadings.productList[i];
-            // 创建新的<tr>元素
-            var row = document.createElement("tr");
-
-            // 创建<td>元素并填充数据
-            var productIdCell = document.createElement("td");
-            var productLink = document.createElement("a");
-            productLink.href = contextPath+"/shop/view/product?productId=" + product.productId;
-            productLink.textContent = product.productId;
-            productIdCell.appendChild(productLink);
-
-            var categoryNameCell = document.createElement("td");
-            categoryNameCell.textContent = product.name;
-
-            // 将<td>元素添加到<tr>元素
-            row.appendChild(productIdCell);
-            row.appendChild(categoryNameCell);
-            // 将<tr>元素添加到表格
-            table.appendChild(row);
+        table.textContent="";
+        let products=response.data.loadings.productList;
+        console.log(products);
+        for(let aproduct of products){
+            let li=document.createElement("li");
+            li.setAttribute("class","media");
+            let img=document.createElement("img");
+            img.setAttribute("class","mr-3");
+            img.setAttribute("src",contextPath+aproduct.picture);
+            img.setAttribute("alt","image");
+            li.appendChild(img);
+            let div=document.createElement("div");
+            div.setAttribute("class","media-body");
+            let h5=document.createElement("h5");
+            h5.setAttribute("class","mt-0 mb-1");
+            let a=document.createElement("a");
+            a.setAttribute("href",contextPath+"/shop/view/product?productId="+aproduct.productId);
+            a.textContent=aproduct.productId;
+            h5.appendChild(a);
+            div.appendChild(h5);
+            let nameStr=document.createElement("strong");
+            nameStr.textContent=aproduct.name;
+            div.appendChild(nameStr);
+            let p=document.createElement("p");
+            p.textContent=aproduct.description;
+            p.style['padding']="0";
+            div.appendChild(p);
+            li.appendChild(div);
+            table.appendChild(li);
         }
     }).catch(function (error) {
         console.error("An error occurred: " + error);
@@ -154,14 +151,15 @@ function updateProductList(url,reqParam){
         if(items==null){
             return;
         }
+        console.log("get itemList");
+        console.log(items);
         //更新列表
         //删除除了表头的所有行
         let table=document.getElementById(tableId);
-        for(let i=1;i<table.rows.length;++i){
-            table.deleteRow(i);
-        }
-        for(let i=0;i<items.length;++i){
-            let item = items[i];
+        let tableBody=table.getElementsByTagName("tbody")[0];
+        //清空tbody
+        tableBody.textContent="";
+        for(let item of items){
             let attributeStr="";
             for(let j=1;j<=5;++j){
                 let attr=item["attribute"+j];
@@ -170,17 +168,48 @@ function updateProductList(url,reqParam){
             }
             attributeStr+=item.product.name;
             // 创建新的<tr>元素
-            let row = table.insertRow(i+1);
+            let row = tableBody.insertRow();
             let cell1=row.insertCell(0);
             let cell2=row.insertCell(1);
             let cell3=row.insertCell(2);
             let cell4=row.insertCell(3);
-            let cell5=row.insertCell(4);
             cell1.innerHTML = "<a href=\""+contextPath+ "/shop/view/item?itemId=" + item.itemId + "\">" + item.itemId + "</a>";
             cell2.textContent = item.product.productId;
             cell3.textContent = attributeStr;
             cell4.textContent = '$' + item.listPrice;
-            cell5.innerHTML = '<a class=\"Button\" href=\"' +contextPath+ "/shop/addcart/item?workingItemId=" + item.itemId + '\">Add to Cart</a>';
+        }
+    }).catch(function (error) {
+        console.error("An error occurred: " + error);
+    });
+}
+function updateOrderList(url,reqParam){
+    axios.request({
+        url: url,
+        method: 'get',
+        params: reqParam
+    }).then(function (response) {
+        let items=response.data.loadings.orderList;
+        if(items==null){
+            return;
+        }
+        console.log("get orderList");
+        console.log(items);
+        //更新列表
+        //删除除了表头的所有行
+        let table=document.getElementById(tableId);
+        console.log("table.rows.length:"+table.rows.length);
+        while(table.rows.length>1){
+            table.deleteRow(1);
+        }
+        for(let i=0;i<items.length;++i){
+            let item = items[i];
+            let row=table.insertRow(i+1);
+            let cell1=row.insertCell(0);
+            let cell2=row.insertCell(1);
+            let cell3=row.insertCell(2);
+            cell1.innerHTML = "<a href=\""+contextPath+ "/shop/view/order?orderId=" + item.orderId + "\">" + item.orderId + "</a>";
+            cell2.textContent = new Date(item.orderDate).toLocaleString();
+            cell3.textContent = '$' + item.totalPrice;
         }
     }).catch(function (error) {
         console.error("An error occurred: " + error);

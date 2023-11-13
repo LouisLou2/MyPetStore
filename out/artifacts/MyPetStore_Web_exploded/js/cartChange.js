@@ -1,36 +1,24 @@
-function remove() {
-    var el = document.getElementById("remove");
-    var el2 = el.parentNode.parentNode;
-    el.parentNode.parentNode.remove();
-    //var el3 = document.getElementById("lastTR");
-    var el3 = document.getElementById("lastTR");
-    el3.before(el2);
+//remove item from cart
+function removeItemFromCart(tableId,itemId,trEle) {
+    console.log("removeItemFromCart");
+    //先发axios请求，再删除
+    axios.get(removeItemFromCartUrl,{
+        params:{
+            itemId:itemId
+        }
+    }).then(function (response) {
+        if(response.data.code==0){
+            console.log(response.data);
+            alert("删除成功");
+            //删除表格中的行
+            console.log(trEle);
+            let table = document.getElementById(tableId);
+            table.removeChild(trEle);
+            console.log("trEle removed")
+        }else{
+            alert("删除失败");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
-    //this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
-$(document).ready(function(){
-    //jQuery调用
-    $('#remove').on('click',function () {
-        $(this.parentNode.parentNode).remove();
-    });
-
-    $("tr").css("background-color", "red");
-});
-
-
-
-
-//var elRemove = document.getElementById('remove');
-//elRemove.addEventListener('click', remove, false);
-
-/*
-$(function () {
-    $('li').on('click',function () {
-        $(this).animate({
-            opacity: 0.0,
-            paddingLeft: '+=80'
-        }, 500, function () {
-            $(this).remove();
-        });
-    });
-});
-*/

@@ -4,8 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.CatalogService;
@@ -28,15 +26,10 @@ public class ViewCategoryServlet extends HttpServlet {
         Category category = CatalogService.getCategory(categoryId);
         List<Product> productList = CatalogService.getProductListWithPage(categoryId, 1);
         int totalPage = CatalogService.getProductTotalPage(categoryId);
-        //保存数据
-        HttpSession session = request.getSession();
-        session.setAttribute("category", category);
-        session.setAttribute("productList", productList);
+        request.setAttribute("category", category);
+        request.setAttribute("productList", productList);
         //向requestScope里面放数据:totalPage
         request.setAttribute("totalPage", totalPage);
-
-        //HttpSession session = request.getSession();
-        Account account = (Account)session.getAttribute("account");
 
         //跳转页面
         request.getRequestDispatcher(VIEW_CATEGORY).forward(request, response);

@@ -2,7 +2,7 @@ var contextPath=document.getElementById("contextPath").innerHTML;
 function changeImg(id) {
     console.log("changeImg");
     axios.request({
-    url: contextPath+'/verify/get_img_code',
+    url: imgCodeUrl,
     method: 'get',
     responseType: 'blob'
     }).then(function (response) {
@@ -51,11 +51,11 @@ function getFields(formElements){
     }
     return formDataObject;
 }
-function signIn(formid,url) {
+function signIn(formid,url,preparedParams=undefined) {
     // 获取表单元素
     var form = document.getElementById(formid);
     if(hasBlank(form.elements)){
-        console.log("has blank");
+        console.log("has blank fields");
         return;
     }
     console.log(form.method);
@@ -63,6 +63,11 @@ function signIn(formid,url) {
     // 获取表单中的所有输入字段
     let formElements = form.elements;
     let formDataObject= getFields(formElements);
+    if(preparedParams!==undefined&&preparedParams!=null){
+        for(var key in preparedParams){
+            formDataObject[key]=preparedParams[key];
+        }
+    }
     //开始提交
     axios.request({
         url: url,
@@ -78,6 +83,7 @@ function signIn(formid,url) {
             return;
         }
         const newLocation = response.data.location;
+        console.log("at:verification.signIn "+newLocation);
         window.location.replace(newLocation);
     }).catch(function (error) {
         console.error(error);
@@ -120,15 +126,14 @@ function CheckAndSubmit(formid,url,preparedParams=undefined) {
         }
     }).then(function (response) {
         console.log(response);
-        //let newLocation = response.data.location;
-        //window.location.replace(newLocation);
         if(parseInt(response.data.code)!==0){
             console.log(response.data.code);
             console.log(parseInt(response.data.code));
             alert(response.data.loadings.error);
             return;
         }else{
-            alert("成功！");
+            let newLocation = response.data.location;
+            window.location.replace(newLocation);
         }
     }).catch(function (error) {
         console.error(error);

@@ -1,5 +1,6 @@
 package org.csu.mypetstore.web.servlets;
 
+import com.alibaba.fastjson2.JSON;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,13 +12,16 @@ import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.RestResponse;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.validator.AccountValidator;
+import org.csu.mypetstore.utils.BeanFlattener;
+import org.csu.mypetstore.utils.URLHelper;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class RegisterServlet extends HttpServlet {
     private static final String MAIN = "/WEB-INF/jsp/catalog/Main.jsp";
     private static final String NEWACCOUNTFORM = "/WEB-INF/jsp/account/NewAccountForm.jsp";
-    private static final String SIGN_ON="/account/signin";
+    private static final String SIGN_ON="/page/account/signin";
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -25,12 +29,13 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RestResponse restResponse = new RestResponse();
         HttpSession session = request.getSession();
-        String value1=request.getParameter("vCode");
-        boolean isSame=AccountValidator.checkImageCode(value1, session.getId());
+        String emailcode=request.getParameter("emailcode");
+        String email=request.getParameter("email");
+        boolean isSame=AccountValidator.checkEmailCode(emailcode,email);
         if(!isSame){
             restResponse.setCode(ResultCodeEnum.FAIL);
             restResponse.setLocation("");
-            restResponse.insertLoading("error", ErrorEnum.VerificationError.IMAGECODE.getMessage());
+            restResponse.insertLoading("error", ErrorEnum.VerificationError.EMAILCODE.getMessage());
             response.getWriter().write(restResponse.ToJsonStr());
             return;
         }
@@ -38,7 +43,6 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address1 = request.getParameter("address1");
         String address2 = request.getParameter("address2");
@@ -51,11 +55,22 @@ public class RegisterServlet extends HttpServlet {
         String listOption = request.getParameter("listOption");
         String bannerOption = request.getParameter("bannerOption");
         Account account1 = new Account(username, password, firstName, lastName, email, phone, address1, address2, city, state, zip, country, languagePreference, favouriteCategoryId, Boolean.parseBoolean(listOption), Boolean.parseBoolean(bannerOption));
-        
+        Map<String,String> errorInfo=null;
+        try {
+            errorInfo= AccountValidator.CheckRegisterParams(BeanFlattener.deepToMap(account1));
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        if(!errorInfo.isEmpty()){
+            restResponse.setCode(ResultCodeEnum.FAIL);
+            restResponse.setLocation("");
+            restResponse.insertLoading("error", JSON.toJSONString(errorInfo));
+            response.getWriter().write(restResponse.ToJsonStr());
+            return;
+        }
         AccountService.insertAccount(account1);
-        session.setAttribute("account", account1);
         restResponse.setCode(ResultCodeEnum.SUCCESS);
-        restResponse.setLocation(SIGN_ON);
+        restResponse.setLocation(URLHelper.getLocationWithRoot(SIGN_ON));
         response.getWriter().write(restResponse.ToJsonStr());
         response.getWriter().close();
     }

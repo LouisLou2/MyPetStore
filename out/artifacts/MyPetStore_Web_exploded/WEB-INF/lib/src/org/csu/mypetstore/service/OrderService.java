@@ -1,5 +1,6 @@
 package org.csu.mypetstore.service;
 
+import org.csu.mypetstore.constant.enums.PageCapacityEnum;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.LineItem;
 import org.csu.mypetstore.domain.Order;
@@ -28,14 +29,18 @@ public class OrderService {
     sequenceDAO= SequenceDAOImpl.INSTANCE;
     lineItemDAO= LineItemDAOImpl.INSTANCE;
   }
-
+  
+    public static int getTotalPage(String username){
+        int totalRecord = orderDAO.getRecordCount(username);
+        return  totalRecord% PageCapacityEnum.ORDER ==0?totalRecord/PageCapacityEnum.ORDER:totalRecord/PageCapacityEnum.ORDER+1;
+    }
   public static void insertOrder(Order order) {
     order.setOrderId(getNextId("ordernum"));
     for (int i = 0; i < order.getLineItems().size(); i++) {
       LineItem lineItem = (LineItem) order.getLineItems().get(i);
       String itemId = lineItem.getItemId();
       Integer increment = lineItem.getQuantity();
-      itemDAO.updateInventoryQuantity(itemId, increment);
+      itemDAO.decrementInventoryQuantity(itemId, increment);
     }
     orderDAO.insertOrder(order);
     orderDAO.insertOrderStatus(order);
@@ -62,7 +67,9 @@ public class OrderService {
   public static List<Order> getOrdersByUsername(String username) {
     return orderDAO.getOrdersByUsername(username);
   }
-
+  public static List<Order> getOrdersByUsernameWithPage(String username, int page) {
+    return orderDAO.getOrdersByUsernameWithPage(username, page);
+  }
   public static int getNextId(String name) {
     Sequence sequence = new Sequence(name, -1);
     sequence = sequenceDAO.getSequence(sequence);

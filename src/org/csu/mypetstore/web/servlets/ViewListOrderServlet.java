@@ -4,8 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.service.OrderService;
 
@@ -21,11 +19,11 @@ public class ViewListOrderServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
-        List<Order> orderList = OrderService.getOrdersByUsername(username);
-        HttpSession session = request.getSession();
-        session.setAttribute("orderList", orderList);
+        List<Order> orderList = OrderService.getOrdersByUsernameWithPage(username, 1);
+        int totalPage = OrderService.getTotalPage(username);
+        request.setAttribute("orderList", orderList);
+        request.setAttribute("totalPage", totalPage);
 
-        Account account = (Account)session.getAttribute("account");
         request.getRequestDispatcher(VIEWLISTORDER).forward(request, response);
     }
 }

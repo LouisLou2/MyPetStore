@@ -3,91 +3,89 @@
 <div id="BackLink">
 	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
 </div>
-
-<div id="Catalog">
-
-<div id="Cart">
-
-<h2>Shopping Cart</h2>
-	<form action="${pageContext.request.contextPath}/shop/update/cartQuantities" method="post">
-		<table>
-			<tr>
-				<th><b>Item ID</b></th>
-				<th><b>Product ID</b></th>
-				<th><b>Description</b></th>
-				<th><b>In Stock?</b></th>
-				<th><b>Quantity</b></th>
-				<th><b>List Price</b></th>
-				<th><b>Total Cost</b></th>
-				<th>&nbsp;</th>
-			</tr>
-
-			<c:if test="${sessionScope.cart.numberOfItems == 0}">
+<%-------------------------------------------------%>
+<div class="container">
+	<div class="row">
+		<div class="col"></div>
+		<div class="col-8">
+			<h2>Shopping Cart</h2>
+			<hr>
+			<table id="cartTable">
+				<thead>
 				<tr>
-					<td colspan="8"><b>Your cart is empty.</b></td>
+					<th>Picture</th>
+					<th>Item Id</th>
+					<th>Product Id</th>
+					<th>Detail</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total Cost</th>
+					<th>Remove</th>
 				</tr>
-			</c:if>
-
-			<c:forEach var="cartItem" items="${sessionScope.cart.cartItems}">
-				<tr class="bg">
-					<td>
-						<a href="shop/view/item?itemId=${cartItem.item.itemId}" >${cartItem.item.itemId}</a>
+				</thead>
+				<tbody id="carTableTbody">
+				<c:forEach var="cartItem" items="${requestScope.cart.cartItems}">
+					<tr>
+						<td>
+							<img src="${pageContext.request.contextPath}${cartItem.item.product.picture}" height="100" width="auto" />
+						</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/shop/view/item?itemId=${cartItem.item.itemId}">${cartItem.item.itemId}</a>
+						</td>
+						<td>
+							${cartItem.item.product.productId}
+						</td>
+						<td>
+							${cartItem.item.attribute1}
+							${cartItem.item.attribute2}
+							${cartItem.item.attribute3}
+							${cartItem.item.attribute4}
+							${cartItem.item.attribute5}
+							${cartItem.item.product.name}
+						</td>
+						<td>
+							<input type="number" id="quantity" name="${cartItem.item.itemId}" value="${cartItem.quantity}" min="1">
+							<div id="cartMsg"></div>
+						</td>
+						<td>
+							<fmt:formatNumber value="${cartItem.item.listPrice}" pattern="$#,##0.00" />
+						</td>
+						<td>
+							<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
+						<td>
+<%--						<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-outline-dark">Remove</button>	--%>
+							<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-dark">Remove</button>
+						</td>
+					</tr>
+				</c:forEach>
+				<tr id="lastTR">
+					<td colspan="7" id="lastTD">
+						Sub Total:<label id="subtotal">${requestScope.cart.subTotal}</label>
+						<!--<fmt:formatNumber value="${requestScope.cart.subTotal}" pattern="$#,##0.00" />-->
 					</td>
-					<td>
-						${cartItem.item.product.productId}
-					</td>
-					<td>
-						${cartItem.item.attribute1} ${cartItem.item.attribute2}
-					    ${cartItem.item.attribute3} ${cartItem.item.attribute4}
-					    ${cartItem.item.attribute5} ${cartItem.item.product.name}
-					</td>
-					<td>
-						${cartItem.inStock}
-					</td>
-					<td>
-						<input type="text" id="quantity" onblur="updateCart();" name="${cartItem.item.itemId}" value="${cartItem.quantity}">
-						<div id="cartMsg"></div>
-						<script type="text/javascript" src="${pageContext.request.contextPath }/js/updateCart.js"></script>
-					</td>
-					<td>
-						<!--format标签显示单价fmt:formatNumber-->
-						<fmt:formatNumber value="${cartItem.item.listPrice}" pattern="$#,##0.00" />
-						<!--<input id="price" value="${cartItem.item.listPrice}" pattern="$#,##0.00" />-->
-
-					</td>
-					<td>
-						<!--format标签显示总价fmt:formatNumber-->
-						<label id="total">${cartItem.total}</label>
-						<!--
-						<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
-						-->
-					</td>
-					<td>
-						<a class="Button" id="remove" href="${pageContext.request.contextPath}/shop/removecart/item?workingItemId=${cartItem.item.itemId}">Remove</a>
-						<!--
-						<input type="button" id="remove" onclick="remove()" value="Remove"> </input>
-						-->
-					</td>
+					<td>&nbsp;</td>
 				</tr>
-				<script src="${pageContext.request.contextPath }/js/cartChange.js"></script>
-			</c:forEach>
-			<tr id="lastTR">
-				<td colspan="7" id="lastTD">
-					Sub Total:<label id="subtotal">${sessionScope.cart.subTotal}</label>
-					<!--<fmt:formatNumber value="${sessionScope.cart.subTotal}" pattern="$#,##0.00" />-->
-					<!--<input type="submit" value="Update Cart"/>-->
-				</td>
-				<td>&nbsp;</td>
-			</tr>
-		</table>
-	</form>
-
-	<c:if test="${sessionScope.cart.numberOfItems > 0}">
-		<a class="Button" href="${pageContext.request.contextPath}/page/shop/newOrder?itemId=${cartItem.item.itemId}">Proceed to Checkout</a>
-    </c:if>
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-center">
+				<c:if test="${requestScope.cart.numberOfItems > 0}">
+					<a class="go-button" href="${pageContext.request.contextPath}/page/shop/newOrder">Proceed to Checkout</a>
+				</c:if>
+			</div>
+		</div>
+		<div class="col"></div>
+	</div>
 </div>
-
-<div id="Separator">&nbsp;</div>
-</div>
-
+<%-------------------------------------------------%>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/cartChange.js"></script>
+<script>
+	let arequestUrl="${pageContext.request.contextPath}/rest/shop/removecart/item";
+	function removeBtnClicked(btnEle){
+		console.log("removeBtnClicked");
+		let trEle=btnEle.parentNode.parentNode;
+		let itemId = trEle.children[1].children[0].innerHTML;
+		removeItemFromCart("carTableTbody",itemId,trEle);
+	}
+	//为什么添加click事件监听仍然没反应
+</script>
 <%@ include file="../common/IncludeBottom.jsp"%>

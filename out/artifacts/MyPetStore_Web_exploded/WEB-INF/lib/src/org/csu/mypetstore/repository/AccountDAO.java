@@ -7,6 +7,8 @@ public interface AccountDAO {
 
     Account getAccountByUsernameAndPassword(Account account);
     boolean isExist(String username);
+    boolean isEmailExist(String email);
+    boolean isPhoneExist(String phone);
     void insertAccount(Account account);
 
     void insertProfile(Account account);

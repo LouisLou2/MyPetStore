@@ -6,11 +6,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.csu.mypetstore.domain.Account;
+import org.csu.mypetstore.utils.URLHelper;
 
 import java.io.IOException;
 
 public class SignOffServlet extends HttpServlet {
-    private static final String MAIN = "/WEB-INF/jsp/catalog/Main.jsp";
+    private static final String MAIN = "/main";
 
     private Account account;
 
@@ -20,11 +21,8 @@ public class SignOffServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Account account = (Account)session.getAttribute("account");
-        account = null;
-        //HttpSession session = request.getSession();
-        session.setAttribute("account", account);
-
-        request.getRequestDispatcher(MAIN).forward(request, response);
+        session.removeAttribute("account");
+        //重定向
+        response.sendRedirect(URLHelper.getLocationWithRoot(MAIN));
     }
 }

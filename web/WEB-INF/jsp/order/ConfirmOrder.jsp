@@ -3,94 +3,134 @@
 <div id="BackLink">
 	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
 </div>
-
-<div id="Catalog">Please confirm the information below and then press continue...
-
-<table>
-	<tr>
-		<th align="center" colspan="2"><font size="4"><b>Order</b></font>
-		<br />
-			<font size="3"><b>
-				<fmt:formatDate value="${sessionScope.order.orderDate}" pattern="yyyy/MM/dd hh:mm:ss" />
-			</b></font>
-		</th>
-	</tr>
-
-	<tr>
-		<th colspan="2">Billing Address</th>
-	</tr>
-	<tr>
-		<td>First name:</td>
-		<td><c:out value="${sessionScope.order.billToFirstName}" /></td>
-	</tr>
-	<tr>
-		<td>Last name:</td>
-		<td><c:out value="${sessionScope.order.billToLastName}" /></td>
-	</tr>
-	<tr>
-		<td>Address 1:</td>
-		<td><c:out value="${sessionScope.order.billAddress1}" /></td>
-	</tr>
-	<tr>
-		<td>Address 2:</td>
-		<td><c:out value="${sessionScope.order.billAddress2}" /></td>
-	</tr>
-	<tr>
-		<td>City:</td>
-		<td><c:out value="${sessionScope.order.billCity}" /></td>
-	</tr>
-	<tr>
-		<td>State:</td>
-		<td><c:out value="${sessionScope.order.billState}" /></td>
-	</tr>
-	<tr>
-		<td>Zip:</td>
-		<td><c:out value="${sessionScope.order.billZip}" /></td>
-	</tr>
-	<tr>
-		<td>Country:</td>
-		<td><c:out value="${sessionScope.order.billCountry}" /></td>
-	</tr>
-	<tr>
-		<th colspan="2">Shipping Address</th>
-	</tr>
-	<tr>
-		<td>First name:</td>
-		<td><c:out value="${sessionScope.order.shipToFirstName}" /></td>
-	</tr>
-	<tr>
-		<td>Last name:</td>
-		<td><c:out value="${sessionScope.order.shipToLastName}" /></td>
-	</tr>
-	<tr>
-		<td>Address 1:</td>
-		<td><c:out value="${sessionScope.order.shipAddress1}" /></td>
-	</tr>
-	<tr>
-		<td>Address 2:</td>
-		<td><c:out value="${sessionScope.order.shipAddress2}" /></td>
-	</tr>
-	<tr>
-		<td>City:</td>
-		<td><c:out value="${sessionScope.order.shipCity}" /></td>
-	</tr>
-	<tr>
-		<td>State:</td>
-		<td><c:out value="${sessionScope.order.shipState}" /></td>
-	</tr>
-	<tr>
-		<td>Zip:</td>
-		<td><c:out value="${sessionScope.order.shipZip}" /></td>
-	</tr>
-	<tr>
-		<td>Country:</td>
-		<td><c:out value="${sessionScope.order.shipCountry}" /></td>
-	</tr>
-
-</table>
-	<a class="Button" href="viewOrder">Confirm</a>
+<div class="container">
+	<div class="container text-center">
+		<div>
+			<h2>Order Confirmation</h2>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col"></div>
+		<div class="col-5">
+			<table id="OrderBillConfirmationTable" class="simple-table">
+				<thead>
+					<tr>
+						<th colspan="2">
+							Billing Address
+						</th>
+					</tr>
+				</thead>
+				<tbody id="OrderBillConfirmationTableTbody">
+					<tr>
+						<td>First name:</td>
+						<td><c:out value="${requestScope.order.billToFirstName}" /></td>
+					</tr>
+					<tr>
+						<td>Last name:</td>
+						<td><c:out value="${requestScope.order.billToLastName}" /></td>
+					</tr>
+					<tr>
+						<td>Address 1:</td>
+						<td><c:out value="${requestScope.order.billAddress1}" /></td>
+					</tr>
+					<tr>
+						<td>Address 2:</td>
+						<td><c:out value="${requestScope.order.billAddress2}" /></td>
+					</tr>
+					<tr>
+						<td>City:</td>
+						<td><c:out value="${requestScope.order.billCity}" /></td>
+					</tr>
+					<tr>
+						<td>State:</td>
+						<td><c:out value="${requestScope.order.billState}" /></td>
+					</tr>
+					<tr>
+						<td>Zip:</td>
+						<td><c:out value="${requestScope.order.billZip}" /></td>
+					</tr>
+					<tr>
+						<td>Country:</td>
+						<td><c:out value="${requestScope.order.billCountry}" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-5">
+			<table id="OrderShippingConfirmationTable" class="simple-table">
+				<thead>
+				<tr>
+					<th colspan="2">
+						Shipping Address
+					</th>
+				</tr>
+				</thead>
+				<tbody id="OrderShippingConfirmationTableTbody">
+				<tr>
+					<td>First name:</td>
+					<td><c:out value="${requestScope.order.shipToFirstName}" /></td>
+				</tr>
+				<tr>
+					<td>Last name:</td>
+					<td><c:out value="${requestScope.order.shipToLastName}" /></td>
+				</tr>
+				<tr>
+					<td>Address 1:</td>
+					<td><c:out value="${requestScope.order.shipAddress1}" /></td>
+				</tr>
+				<tr>
+					<td>Address 2:</td>
+					<td><c:out value="${requestScope.order.shipAddress2}" /></td>
+				</tr>
+				<tr>
+					<td>City:</td>
+					<td><c:out value="${requestScope.order.shipCity}" /></td>
+				</tr>
+				<tr>
+					<td>State:</td>
+					<td><c:out value="${requestScope.order.shipState}" /></td>
+				</tr>
+				<tr>
+					<td>Zip:</td>
+					<td><c:out value="${requestScope.order.shipZip}" /></td>
+				</tr>
+				<tr>
+					<td>Country:</td>
+					<td><c:out value="${requestScope.order.shipCountry}" /></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col"></div>
+	</div>
+	<div class="container text-center">
+		<div class="col align-self-center">
+			<button type="button" class="btn btn-outline-success" onclick="ConfirmOrder()">Confirm</button>
+		</div>
+	</div>
 </div>
-
+<script>
+	function ConfirmOrder() {
+		//使用axios
+		axios({
+			method: 'get',
+			url: restConfirmOrderUrl,
+			data: {
+			}
+		}).then(function (response) {
+			console.log(response);
+			if (response.data.code==0) {
+				alert("Order confirmed!");
+			} else {
+				alert(response.data.loadings.error);
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+		
+	}
+</script>
 <%@ include file="../common/IncludeBottom.jsp"%>
 
 

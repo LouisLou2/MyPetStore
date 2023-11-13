@@ -4,13 +4,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.csu.mypetstore.domain.Account;
+import org.csu.mypetstore.constant.enums.ResultCodeEnum;
 import org.csu.mypetstore.domain.Cart;
-import org.csu.mypetstore.domain.CartItem;
+import org.csu.mypetstore.domain.RestResponse;
+import org.csu.mypetstore.service.CartService;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 public class UpdateCartQuantitiesServlet extends HttpServlet {
 
@@ -24,38 +23,16 @@ public class UpdateCartQuantitiesServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        workingItemId = request.getParameter("workingItemId");
-
-        //从对话中，获取购物车
-        HttpSession session = request.getSession();
-        cart = (Cart)session.getAttribute("cart");
-
-        Iterator<CartItem> cartItemIterator = cart.getAllCartItems();
-
-        while (cartItemIterator.hasNext()){
-            //产品数量增加
-            CartItem cartItem = (CartItem)cartItemIterator.next();
-            String itemId = cartItem.getItem().getItemId();
-
-            try {
-                int quantity = Integer.parseInt((String) request.getParameter(itemId));
-                cart.setQuantityByItemId(itemId, quantity);
-                if (quantity < 1) {
-                    cartItemIterator.remove();
-                }
-            } catch (Exception e) {
-                //ignore parse exceptions on purpose
-                e.printStackTrace();
-            }
-
-            //CartItem cartItem = cartItemIterator.next();
-            //cartItem.incrementQuantity();
-        }
-
-        session.setAttribute("cart", cart);
-
-        //HttpSession session = request.getSession();
-        Account account = (Account)session.getAttribute("account");
-        request.getRequestDispatcher(VIEW_CART).forward(request, response);
+        RestResponse restResponse = new RestResponse();
+        String username = request.getParameter("username");
+        String itemId = request.getParameter("itemId");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        //更新购物车中的商品数量
+        CartService.updateCartItemQuantity(username,itemId,quantity);
+        restResponse.setCode(ResultCodeEnum.SUCCESS);
+        restResponse.insertLoading("message","更新成功");
+        response.getWriter().println(restResponse.ToJsonStr());
+        //close
+        response.getWriter().close();
     }
 }

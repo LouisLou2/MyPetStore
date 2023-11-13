@@ -64,16 +64,21 @@ public class AccountDAOImpl implements AccountDAO {
             "    WHERE USERID = ?";
     private static final String updateProfileString = "UPDATE PROFILE SET LANGPREF = ?, FAVCATEGORY = ? WHERE USERID = ?";
     private static final String updateSignonString = "UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?";
-
+    private static final String isExistString = "select ifnull((select 1  from account where userid = ? LIMIT 1 ), 0)";
+    private static final String isEmailExistString = "select ifnull((select 1  from account where email = ? LIMIT 1 ), 0)";
+    private static final String isPhoneExistString = "select ifnull((select 1  from account where phone = ? LIMIT 1 ), 0)";
     @Override
     public Account getAccountByUsername(String username) {
         Account account = null;
-        try{
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsernameString);
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getAccountByUsernameString);
             preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 account = new Account();
                 account.setUsername(resultSet.getString(1));
                 account.setEmail(resultSet.getString(2));
@@ -93,11 +98,12 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setBannerOption(resultSet.getBoolean(16));
                 account.setBannerName(resultSet.getString(17));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return account;
     }
@@ -105,13 +111,16 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public Account getAccountByUsernameAndPassword(Account account) {
         Account account1 = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsernameAndPasswordString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getAccountByUsernameAndPasswordString);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getPassword());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 account1 = new Account();
                 account1.setUsername(resultSet.getString(1));
                 account1.setEmail(resultSet.getString(2));
@@ -131,39 +140,91 @@ public class AccountDAOImpl implements AccountDAO {
                 account1.setBannerOption(resultSet.getBoolean(16));
                 account1.setBannerName(resultSet.getString(17));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return account1;
     }
 
     @Override
     public boolean isExist(String username) {
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select ifnull((select 1  from account where userid = ? LIMIT 1 ), 0)");
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(isExistString);
             preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return resultSet.getInt(1) == 1;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
+        }
+        return true;
+    }
+    @Override
+    public boolean isEmailExist(String email) {
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(isEmailExistString);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) == 1;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isPhoneExist(String phone) {
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(isPhoneExistString);
+            preparedStatement.setString(1, phone);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) == 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return true;
     }
 
     @Override
     public void insertAccount(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertAccountString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(insertAccountString);
             preparedStatement.setString(1, account.getEmail());
             preparedStatement.setString(2, account.getFirstName());
             preparedStatement.setString(3, account.getLastName());
@@ -177,52 +238,58 @@ public class AccountDAOImpl implements AccountDAO {
             preparedStatement.setString(11, account.getPhone());
             preparedStatement.setString(12, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     @Override
     public void insertProfile(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertProfileString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(insertProfileString);
             preparedStatement.setString(1, account.getLanguagePreference());
             preparedStatement.setString(2, account.getFavouriteCategoryId());
             preparedStatement.setString(3, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     @Override
     public void insertSignon(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSignonString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(insertSignonString);
             preparedStatement.setString(1, account.getPassword());
             preparedStatement.setString(2, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closeStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     @Override
     public void updateAccount(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateAccountString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(updateAccountString);
             preparedStatement.setString(1, account.getEmail());
             preparedStatement.setString(2, account.getFirstName());
             preparedStatement.setString(3, account.getLastName());
@@ -236,44 +303,48 @@ public class AccountDAOImpl implements AccountDAO {
             preparedStatement.setString(11, account.getPhone());
             preparedStatement.setString(12, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     @Override
     public void updateProfile(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateProfileString);
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(updateProfileString);
             preparedStatement.setString(1, account.getLanguagePreference());
             preparedStatement.setString(2, account.getFavouriteCategoryId());
             preparedStatement.setString(3, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     @Override
     public void updateSignon(Account account) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = DBUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSignonString);
-            preparedStatement.setString(1,account.getPassword());
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(updateSignonString);
+            preparedStatement.setString(1, account.getPassword());
             preparedStatement.setString(2, account.getUsername());
             preparedStatement.executeUpdate();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             DBUtil.closePreparedStatement(preparedStatement);
             DBUtil.closeConnection(connection);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 }
