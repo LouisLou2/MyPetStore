@@ -14,7 +14,10 @@ public class VerifiyService {
         boolean res=false;
         try{
             String content= TemplateUtil.MakeProduct(Map.of("code",code), TemplateVault.EMAIL_VERIFY);
-            EmailUtil.sendEmail(email, EmailSubjectEnum.EMAIL_VERIFY,content);
+            Runnable emailTask = () -> {
+                EmailUtil.sendEmail(email, EmailSubjectEnum.EMAIL_VERIFY,content);
+            };
+            ThreadService.submitATask(emailTask);
             res=true;
         } catch (TemplateException e) {
             throw new RuntimeException(e);

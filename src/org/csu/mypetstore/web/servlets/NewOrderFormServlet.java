@@ -27,8 +27,7 @@ public class NewOrderFormServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         Account account = (Account)session.getAttribute("account");
-        List<CartItem> cartItemList = CartService.getCartItemListWithPage(account.getUsername(),1);
-        cartItemList=CartService.getCartItemList(account.getUsername());
+        List<CartItem> cartItemList=CartService.getCartItemList(account.getUsername());
         Cart cart = new Cart(cartItemList);
         Order order = new Order();
         order.initOrder(account, cart);

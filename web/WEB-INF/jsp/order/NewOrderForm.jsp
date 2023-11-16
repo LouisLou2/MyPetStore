@@ -31,8 +31,8 @@
 					<div id="cardNumberFeedback" class="invalid-feedback"></div>
 				</div>
 				<div class="form-group">
-					<label for="expireDate">Expire Data</label>
-					<input type="text" name="expireDate" value="12/03" id="expireDate" class="form-control" aria-describedby="emailHelp" placeholder="Expire Date" required>
+					<label for="expiryDate">Expiry Data</label>
+					<input type="text" name="expiryDate" value="12/03" id="expiryDate" class="form-control" aria-describedby="emailHelp" placeholder="Expire Date" required>
 					<div id="expireDateFeedback" class="invalid-feedback"></div>
 				</div>
 				<h4>Billing Information</h4>
@@ -79,7 +79,7 @@
 
 				<div class="form-row">
 					<div class="form-check">
-						<input class="form-check-input" type="radio" name="hasDifferentShippingInfo" value="1" id="shippingAreaChecker" onchange="shippingAreaChange()" >
+						<input class="form-check-input" type="checkbox" name="hasDifferentShippingInfo" value="1" id="shippingAreaChecker" onchange="shippingAreaChange()" >
 						<label class="form-check-label" for="shippingAreaChecker">
 							Use Address Different From Billing Address
 						</label>

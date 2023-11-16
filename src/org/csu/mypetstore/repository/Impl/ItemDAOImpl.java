@@ -5,6 +5,7 @@ import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.repository.ItemDAO;
 import org.csu.mypetstore.utils.DBUtil;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public class ItemDAOImpl implements ItemDAO {
             "CATEGORY AS \"product.categoryId\", PICTURE AS \"product.picture\", STATUS, ATTR1 AS attribute1, ATTR2 AS attribute2, " +
             "ATTR3 AS attribute3, ATTR4 AS attribute4, ATTR5 AS attribute5, QTY AS quantity from ITEM I, " +
             "INVENTORY V, PRODUCT P where P.PRODUCTID = I.PRODUCTID and I.ITEMID = V.ITEMID and I.ITEMID = ?";
-
+    private static final String getItemPriceString = "SELECT LISTPRICE FROM ITEM WHERE ITEMID = ?";
     static {
         INSTANCE = new ItemDAOImpl();
     }
@@ -239,5 +240,29 @@ public class ItemDAOImpl implements ItemDAO {
             DBUtil.closeConnection(connection);
         }
         return itemList;
+    }
+
+    @Override
+    public BigDecimal getItemPrice(String itemId) {
+        BigDecimal price = BigDecimal.valueOf(0);
+        ResultSet resultSet = null;
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            pStatement = connection.prepareStatement(getItemPriceString);
+            pStatement.setString(1, itemId);
+            resultSet = pStatement.executeQuery();
+            if (resultSet.next()) {
+                price = resultSet.getBigDecimal(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(pStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return price;
     }
 }

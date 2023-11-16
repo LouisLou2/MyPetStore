@@ -29,9 +29,9 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RestResponse restResponse = new RestResponse();
         HttpSession session = request.getSession();
-        String emailcode=request.getParameter("emailcode");
+        String emailCode=request.getParameter("emailCode");
         String email=request.getParameter("email");
-        boolean isSame=AccountValidator.checkEmailCode(emailcode,email);
+        boolean isSame=AccountValidator.checkEmailCode(emailCode,email);
         if(!isSame){
             restResponse.setCode(ResultCodeEnum.FAIL);
             restResponse.setLocation("");
@@ -65,12 +65,12 @@ public class RegisterServlet extends HttpServlet {
             restResponse.setCode(ResultCodeEnum.FAIL);
             restResponse.setLocation("");
             restResponse.insertLoading("error", JSON.toJSONString(errorInfo));
-            response.getWriter().write(restResponse.ToJsonStr());
-            return;
+        }else{
+            AccountService.insertAccount(account1);
+            restResponse.setCode(ResultCodeEnum.SUCCESS);
+            String fullURL = URLHelper.getFullURL(SIGN_ON);
+            restResponse.setLocation(URLHelper.getFullURL(SIGN_ON));
         }
-        AccountService.insertAccount(account1);
-        restResponse.setCode(ResultCodeEnum.SUCCESS);
-        restResponse.setLocation(URLHelper.getLocationWithRoot(SIGN_ON));
         response.getWriter().write(restResponse.ToJsonStr());
         response.getWriter().close();
     }

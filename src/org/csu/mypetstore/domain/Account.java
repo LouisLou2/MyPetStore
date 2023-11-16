@@ -42,6 +42,8 @@ public class Account implements Serializable {
     this.favouriteCategoryId = favouriteCategoryId;
     this.listOption = listOption;
     this.bannerOption = bannerOption;
+    this.bannerName="undefined";
+    this.status="OK";
   }
 
   public Account() {

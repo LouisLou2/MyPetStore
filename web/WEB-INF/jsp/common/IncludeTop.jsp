@@ -62,10 +62,10 @@
                 </li>
                 <c:if test="${sessionScope.account == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/page/account/signin">Sign In</a>
+                        <a class="nav-link" onclick="navSignInOrUpClicked()" href="${pageContext.request.contextPath}/page/account/signin">Sign In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/page/account/register">Sign Up</a>
+                        <a class="nav-link" onclick="navSignInOrUpClicked()" href="${pageContext.request.contextPath}/page/account/register">Sign Up</a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.account != null}">
@@ -113,3 +113,9 @@
         <a href="${pageContext.request.contextPath}/shop/view/category?categoryId=BIRDS"><img src="${pageContext.request.contextPath}/images/sm_birds.gif" /></a>
     </div>
 </div>
+<script>
+    function navSignInOrUpClicked(){
+        localStorage.setItem('active','1');
+        localStorage.setItem('originalLink',window.location.href);
+    }
+</script>

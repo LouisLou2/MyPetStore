@@ -16,6 +16,7 @@ public class URLHelper {
     public static String getLocationWithRoot(String location) {
         return AppProperties.APP_ROOT+location;
     }
+    //这个函数应该传uri
     public static String getFullURL(String path) {
         if(path==null){
             return null;
@@ -23,6 +24,8 @@ public class URLHelper {
         if(path.startsWith("http://")||path.startsWith("https://")){
             return path;
         }
-        return AppProperties.APP_ROOT_WITH_ADDRESS_AND_PORT + path;
+        if(path.startsWith(AppProperties.APP_ROOT)) 
+            return AppProperties.ADDRESS_AND_PORT + path;
+        return AppProperties.APP_ROOT_WITH_ADDRESS_AND_PORT +path;
     }
 }

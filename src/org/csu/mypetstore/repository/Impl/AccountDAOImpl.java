@@ -33,6 +33,29 @@ public class AccountDAOImpl implements AccountDAO {
             "      AND SIGNON.USERNAME = ACCOUNT.USERID" +
             "      AND PROFILE.USERID = ACCOUNT.USERID" +
             "      AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY";
+    private static final String getAccountByEmailString = "SELECT" +
+            "          SIGNON.USERNAME," +
+            "          ACCOUNT.EMAIL," +
+            "          ACCOUNT.FIRSTNAME," +
+            "          ACCOUNT.LASTNAME," +
+            "          ACCOUNT.STATUS," +
+            "          ACCOUNT.ADDR1 AS address1," +
+            "          ACCOUNT.ADDR2 AS address2," +
+            "          ACCOUNT.CITY," +
+            "          ACCOUNT.STATE," +
+            "          ACCOUNT.ZIP," +
+            "          ACCOUNT.COUNTRY," +
+            "          ACCOUNT.PHONE," +
+            "          PROFILE.LANGPREF AS languagePreference," +
+            "          PROFILE.FAVCATEGORY AS favouriteCategoryId," +
+            "          PROFILE.MYLISTOPT AS listOption," +
+            "          PROFILE.BANNEROPT AS bannerOption," +
+            "          BANNERDATA.BANNERNAME" +
+            "    FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA" +
+            "    WHERE ACCOUNT.EMAIL= ?" +
+            "      AND SIGNON.USERNAME = ACCOUNT.USERID" +
+            "      AND PROFILE.USERID = ACCOUNT.USERID" +
+            "      AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY";
     private static final String getAccountByUsernameAndPasswordString = "SELECT \n" +
             "SIGNON.USERNAME, ACCOUNT.EMAIL, ACCOUNT.FIRSTNAME, ACCOUNT.LASTNAME, \n" +
             "ACCOUNT.STATUS, ACCOUNT.ADDR1 AS address1, ACCOUNT.ADDR2 AS address2, ACCOUNT.CITY,  ACCOUNT.STATE, ACCOUNT.ZIP, ACCOUNT.COUNTRY, ACCOUNT.PHONE, \n" +
@@ -64,6 +87,7 @@ public class AccountDAOImpl implements AccountDAO {
             "    WHERE USERID = ?";
     private static final String updateProfileString = "UPDATE PROFILE SET LANGPREF = ?, FAVCATEGORY = ? WHERE USERID = ?";
     private static final String updateSignonString = "UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?";
+    private static final String getPasswordByUsernameString = "select password from signon where username = ?";
     private static final String isExistString = "select ifnull((select 1  from account where userid = ? LIMIT 1 ), 0)";
     private static final String isEmailExistString = "select ifnull((select 1  from account where email = ? LIMIT 1 ), 0)";
     private static final String isPhoneExistString = "select ifnull((select 1  from account where phone = ? LIMIT 1 ), 0)";
@@ -77,6 +101,47 @@ public class AccountDAOImpl implements AccountDAO {
             connection = DBUtil.getConnection();
             preparedStatement = connection.prepareStatement(getAccountByUsernameString);
             preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new Account();
+                account.setUsername(resultSet.getString(1));
+                account.setEmail(resultSet.getString(2));
+                account.setFirstName(resultSet.getString(3));
+                account.setLastName(resultSet.getString(4));
+                account.setStatus(resultSet.getString(5));
+                account.setAddress1(resultSet.getString(6));
+                account.setAddress2(resultSet.getString(7));
+                account.setCity(resultSet.getString(8));
+                account.setState(resultSet.getString(9));
+                account.setZip(resultSet.getString(10));
+                account.setCountry(resultSet.getString(11));
+                account.setPhone(resultSet.getString(12));
+                account.setLanguagePreference(resultSet.getString(13));
+                account.setFavouriteCategoryId(resultSet.getString(14));
+                account.setListOption(resultSet.getBoolean(15));
+                account.setBannerOption(resultSet.getBoolean(16));
+                account.setBannerName(resultSet.getString(17));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return account;
+    }
+
+    @Override
+    public Account getAccountByEmail(String email) {
+        Account account = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getAccountByEmailString);
+            preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 account = new Account();
@@ -339,6 +404,48 @@ public class AccountDAOImpl implements AccountDAO {
             preparedStatement = connection.prepareStatement(updateSignonString);
             preparedStatement.setString(1, account.getPassword());
             preparedStatement.setString(2, account.getUsername());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public String getPasswordByUsername(String username) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String password = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getPasswordByUsernameString);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                password= resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            password = null;
+        } finally {
+            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+            DBUtil.closeResultSet(resultSet);
+        }
+        return password;
+    }
+
+    @Override
+    public void updatePasswordByUsername(String username, String password) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(updateSignonString);
+            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, username);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

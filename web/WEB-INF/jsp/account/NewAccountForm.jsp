@@ -17,10 +17,10 @@ ${sessionScope.messageAccount}
 					<label for="validationServer01">Email Code</label>
 					<div class="form-row">
 						<div class="col-md-4 mb-3">
-							<input type="text" class="form-control" name="emailcode" placeholder="Email Code" value="Mark" required>
+							<input type="text" class="form-control" name="emailCode" placeholder="Email Code" value="" required>
 						</div>
 						<div class="col-md-4 mb-3">
-							<button id="emailcodeBtn" onclick="sendEmailCodeClicked(this)" class="btn btn-primary my-1">Send Code</button>
+							<button id="emailcodeBtn" type="button" onclick="sendEmailCodeClicked(this,'0')" class="btn btn-primary my-1">Send Code</button>
 						</div>
 					</div>
 				</div>
@@ -36,16 +36,16 @@ ${sessionScope.messageAccount}
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Confirm Password</label>
-					<input type="password" name="repeatedPassword" class="form-control" id="exampleInputPassword2" placeholder="Password">
+					<input type="password" name="repeatedPassword" class="form-control" id="exampleInputPassword2" placeholder="Enter Password Again">
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 mb-3">
 						<label for="validationServer01">First name</label>
-						<input type="text" name="firstName" class="form-control" id="validationServer01" placeholder="First name" value="Mark" required>
+						<input type="text" name="firstName" class="form-control" id="validationServer01" placeholder="First name" value="" required>
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="validationServer02">Last name</label>
-						<input type="text" name="lastName" class="form-control" id="validationServer02" placeholder="Last name" value="Otto" required>
+						<input type="text" name="lastName" class="form-control" id="validationServer02" placeholder="Last name" value="" required>
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="username">Username</label>
@@ -61,7 +61,7 @@ ${sessionScope.messageAccount}
 				<div class="form-row">
 					<div class="col-md-3 mb-3">
 						<label for="validationServer03">Country</label>
-						<input type="text" name="country"  class="form-control" id="validationServer0" placeholder="City" required>
+						<input type="text" name="country"  class="form-control" id="validationServer0" placeholder="Country" required>
 					</div>
 					<div class="col-md-3 mb-3">
 						<label for="validationServer04">State</label>
@@ -79,13 +79,13 @@ ${sessionScope.messageAccount}
 				<div class="form-row">
 					<div class="form-group">
 						<label for="addr1">Address1</label>
-						<input type="text" name="address1" class="form-control" id="addr1" aria-describedby="emailHelp" placeholder="Enter email">
+						<input type="text" name="address1" class="form-control" id="addr1"  placeholder="Enter A Address">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group">
 						<label for="addr2">Address2</label>
-						<input type="text" name="address2" class="form-control" id="addr2" aria-describedby="emailHelp" placeholder="Enter email">
+						<input type="text" name="address2" class="form-control" id="addr2" placeholder="Enter Another Address">
 					</div>
 				</div>
 				<div class="col-auto my-1">
@@ -134,6 +134,9 @@ ${sessionScope.messageAccount}
 	// });
 	let formId = "registerInfo";
 	let url="${pageContext.request.contextPath }/account/register";
+	let preparedParams={
+		"emailExpectation":"0",//表示期望的email不存在，虽然前端已经验证过了，但是后端也要验证
+	}
 	function submitClicked(){
 		CheckAndSubmit("registerInfo",url);
 	}

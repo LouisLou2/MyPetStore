@@ -16,7 +16,7 @@ public class LineItemDAOImpl implements LineItemDAO {
             "LINENUM AS lineNumber, ITEMID, QUANTITY, UNITPRICE FROM LINEITEM" +
             " WHERE ORDERID = ?";
     private static final String insertLineItemString = " INSERT INTO LINEITEM " +
-            "(ORDERID, LINENUM, ITEMID, QUANTITY, UNITPRICE) VALUES (?, ?, ?, ?, )";
+            "(ORDERID, LINENUM, ITEMID, QUANTITY, UNITPRICE) VALUES (?, ?, ?, ?, ?)";
 
     static {
         INSTANCE = new LineItemDAOImpl();
@@ -31,7 +31,6 @@ public class LineItemDAOImpl implements LineItemDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 LineItem lineItem = new LineItem();
-
                 lineItem.setOrderId(resultSet.getInt(1));
                 lineItem.setLineNumber(resultSet.getInt(2));
                 lineItem.setItemId(resultSet.getString(3));

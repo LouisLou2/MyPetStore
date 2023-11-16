@@ -1,5 +1,5 @@
 <%@ include file="../common/IncludeTop.jsp"%>
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/cartChange.js"></script>
 <div id="BackLink">
 	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
 </div>
@@ -44,7 +44,7 @@
 							${cartItem.item.product.name}
 						</td>
 						<td>
-							<input type="number" id="quantity" name="${cartItem.item.itemId}" value="${cartItem.quantity}" min="1">
+							<input type="number" id="quantity" name="${cartItem.item.itemId}" value="${cartItem.quantity}" min="1" onblur="updateCart(this.parentElement.parentElement)">
 							<div id="cartMsg"></div>
 						</td>
 						<td>
@@ -60,24 +60,27 @@
 				</c:forEach>
 				<tr id="lastTR">
 					<td colspan="7" id="lastTD">
-						Sub Total:<label id="subtotal">${requestScope.cart.subTotal}</label>
+						Sub Total:&nbsp;<strong id="subtotal">${requestScope.cart.subTotal}</strong>
 						<!--<fmt:formatNumber value="${requestScope.cart.subTotal}" pattern="$#,##0.00" />-->
 					</td>
 					<td>&nbsp;</td>
 				</tr>
 				</tbody>
 			</table>
-			<div class="d-flex justify-content-center">
-				<c:if test="${requestScope.cart.numberOfItems > 0}">
-					<a class="go-button" href="${pageContext.request.contextPath}/page/shop/newOrder">Proceed to Checkout</a>
-				</c:if>
-			</div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-3"> <!-- 设置您想要的宽度，例如 col-6 -->
+                        <c:if test="${requestScope.cart.numberOfItems > 0}">
+                            <a class="btn btn-success" role="button" href="${pageContext.request.contextPath}/page/shop/newOrder">Checkout</a>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
 		</div>
 		<div class="col"></div>
 	</div>
 </div>
 <%-------------------------------------------------%>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/cartChange.js"></script>
 <script>
 	let arequestUrl="${pageContext.request.contextPath}/rest/shop/removecart/item";
 	function removeBtnClicked(btnEle){

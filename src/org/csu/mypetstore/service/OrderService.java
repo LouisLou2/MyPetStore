@@ -34,8 +34,9 @@ public class OrderService {
         int totalRecord = orderDAO.getRecordCount(username);
         return  totalRecord% PageCapacityEnum.ORDER ==0?totalRecord/PageCapacityEnum.ORDER:totalRecord/PageCapacityEnum.ORDER+1;
     }
-  public static void insertOrder(Order order) {
-    order.setOrderId(getNextId("ordernum"));
+  public static String insertOrder(Order order) {
+    int orderId = getNextId("ordernum");
+    order.setOrderId(orderId);
     for (int i = 0; i < order.getLineItems().size(); i++) {
       LineItem lineItem = (LineItem) order.getLineItems().get(i);
       String itemId = lineItem.getItemId();
@@ -49,6 +50,7 @@ public class OrderService {
       lineItem.setOrderId(order.getOrderId());
       lineItemDAO.insertLineItem(lineItem);
     }
+    return String.valueOf(orderId);
   }
 
   public static Order getOrder(int orderId) {

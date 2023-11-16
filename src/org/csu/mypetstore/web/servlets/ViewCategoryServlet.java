@@ -15,14 +15,13 @@ public class ViewCategoryServlet extends HttpServlet {
 
     private static final String VIEW_CATEGORY = "/WEB-INF/jsp/catalog/Category.jsp";
 
-    private String categoryId;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        categoryId = request.getParameter("categoryId");
+        
+        String categoryId = request.getParameter("categoryId");
         Category category = CatalogService.getCategory(categoryId);
         List<Product> productList = CatalogService.getProductListWithPage(categoryId, 1);
         int totalPage = CatalogService.getProductTotalPage(categoryId);

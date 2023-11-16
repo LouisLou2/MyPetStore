@@ -1,5 +1,5 @@
-let currentPage=1;
-let totalPage=-1;
+var currentPage=1;
+var totalPage=-1;
 var ul=document.getElementById("catalogul");;
 var originClicked;
 var originPage=1;
@@ -12,6 +12,8 @@ var functionValt={};
 functionValt["updateCategoryList"]=updateCategoryList;
 functionValt["updateProductList"]=updateProductList;
 functionValt["updateOrderList"]=updateOrderList;
+
+var orderElementClone;
 function initPaginationRow(arequestUrl,atableId,aupdateFunc,totalpage,acurrentPage,apreparedParams=null){
     console.log("initPaginationRow");
     updateFunc=functionValt[aupdateFunc];
@@ -20,14 +22,15 @@ function initPaginationRow(arequestUrl,atableId,aupdateFunc,totalpage,acurrentPa
     tableId=atableId;
     preparedParams=apreparedParams;
     requestUrl=arequestUrl;
-    let li = document.createElement("li");
+    orderElementClone=document.getElementById(tableId).firstElementChild.cloneNode(true);
+    let prevli = document.createElement("li");
     //添加class
-    li.setAttribute("class", "button");
-    li.innerHTML="Prev";
-    li.addEventListener("click",handleClick)
-    ul.appendChild(li);
+    prevli.setAttribute("class", "button");
+    prevli.innerHTML="Prev";
+    prevli.addEventListener("click",handleClick)
+    ul.appendChild(prevli);
     for(let i=1;i<=totalPage;++i){
-        li = document.createElement("li");
+        let li = document.createElement("li");
         li.addEventListener("click",handleClick);
         if(i==5&&totalpage>=10){
             li.innerHTML = "...";
@@ -39,24 +42,26 @@ function initPaginationRow(arequestUrl,atableId,aupdateFunc,totalpage,acurrentPa
         ul.appendChild(li);
     }
     //添加末页按钮
-    li = document.createElement("li");
+    let lastli = document.createElement("li");
     //添加class
-    li.innerHTML="Last";
-    ul.appendChild(li);
-    li.addEventListener("click",handleClick);
-    li = document.createElement("li");
+    lastli.innerHTML="Last";
+    ul.appendChild(lastli);
+    lastli.addEventListener("click",handleClick);
+    lastli = document.createElement("li");
     //添加class
-    li.setAttribute("class", "button");
-    li.innerHTML="Next";
-    li.addEventListener("click",handleClick)
-    ul.appendChild(li);
+    lastli.setAttribute("class", "button");
+    lastli.innerHTML="Next";
+    lastli.addEventListener("click",handleClick)
+    ul.appendChild(lastli);
     //设置第一页被选中
+    currentPage=1;
     const lis = ul.getElementsByTagName("li");
     lis[currentPage].setAttribute("class","current");
     originClicked=lis[currentPage];
 }
 
 function handleClick(event){
+    console.log("handleClick");
     var clickedElement = event.target;
     if(clickedElement.innerHTML=="..."||clickedElement.classList.contains("current")){
         return;
@@ -71,26 +76,34 @@ function handleClick(event){
     else{
         currentPage=parseInt(this.innerHTML);
     }
+    console.log("currentPage:"+currentPage);
     if(currentPage<1||currentPage>totalPage||currentPage===originPage){
+        console.log("currentPage:"+currentPage+" originPage:"+originPage);
+        currentPage=originPage;
         return;
     }
     //更新页码
     originPage=currentPage;
     //图标变化
-    let theli=ul.children[currentPage];
-    if(!isNaN(theli.innerHTML)){
-        console.log("isnum:"+ul.children[currentPage].innerHTML);
-        theli.classList.add("current");
+    let theli=null;
+    if(totalPage<10||(totalPage>=10&&currentPage<=4)){
+        theli=ul.children[currentPage];
+    }else if(totalPage>=10&&currentPage>totalPage-3){
+        theli=ul.children[currentPage-totalPage+8];
     }else{
-        console.log("notnum:"+ul.children[currentPage].innerHTML);
+        theli=null;
+    }
+    if(theli!==null&&!isNaN(parseInt(theli.innerHTML))){
+        console.log("num:"+ul.children[currentPage].innerHTML);
+        theli.classList.add("current");
     }
     if(originClicked!=null){
+        //如果是null，说明在...的位置，不需要删除
         //删除原来的current
         if(originClicked.classList.contains("current")){
             originClicked.classList.remove("current");
         }
     }
-    console.log("origin:"+originClicked.innerHTML);
     originClicked=theli;
     //发送请求
     if(preparedParams==null) preparedParams={};
@@ -192,24 +205,36 @@ function updateOrderList(url,reqParam){
         if(items==null){
             return;
         }
-        console.log("get orderList");
-        console.log(items);
-        //更新列表
-        //删除除了表头的所有行
-        let table=document.getElementById(tableId);
-        console.log("table.rows.length:"+table.rows.length);
-        while(table.rows.length>1){
-            table.deleteRow(1);
+        let orderInfoList=document.getElementById(tableId);
+        let orderId_a_list=orderInfoList.querySelectorAll('[name="orderId"]');
+        let orderDate_h6_list=orderInfoList.querySelectorAll('[name="orderDate"]');
+        let orderTotal_strong_list=orderInfoList.querySelectorAll('[name="totalPrice"]');
+        let i=0;
+        while(i<orderDate_h6_list.length&&i<items.length){
+            orderId_a_list[i].textContent=items[i].orderId;
+            orderId_a_list[i].href=contextPath+"/shop/view/order?orderId="+items[i].orderId;
+            orderDate_h6_list[i].textContent=items[i].orderDate;
+            orderTotal_strong_list[i].textContent='$'+items[i].totalPrice;
+            ++i;
         }
-        for(let i=0;i<items.length;++i){
-            let item = items[i];
-            let row=table.insertRow(i+1);
-            let cell1=row.insertCell(0);
-            let cell2=row.insertCell(1);
-            let cell3=row.insertCell(2);
-            cell1.innerHTML = "<a href=\""+contextPath+ "/shop/view/order?orderId=" + item.orderId + "\">" + item.orderId + "</a>";
-            cell2.textContent = new Date(item.orderDate).toLocaleString();
-            cell3.textContent = '$' + item.totalPrice;
+        if(i<orderDate_h6_list.length) {
+            //删除多余的
+            while (i < orderDate_h6_list.length) {
+                let targetdiv=orderDate_h6_list[i].parentElement.parentElement.parentElement.parentElement;
+                orderInfoList.removeChild(targetdiv);
+                ++i;
+            }
+            return;
+        }
+        while(i<items.length){
+            //添加新的
+            let newOrderElement=orderElementClone.cloneNode(true);
+            newOrderElement.querySelector('[name="orderId"]').textContent=items[i].orderId;
+            newOrderElement.querySelector('[name="orderId"]').href=contextPath+"/shop/view/order?orderId="+items[i].orderId;
+            newOrderElement.querySelector('[name="orderDate"]').textContent=items[i].orderDate;
+            newOrderElement.querySelector('[name="totalPrice"]').textContent='$'+items[i].totalPrice;
+            orderInfoList.appendChild(newOrderElement);
+            ++i;
         }
     }).catch(function (error) {
         console.error("An error occurred: " + error);

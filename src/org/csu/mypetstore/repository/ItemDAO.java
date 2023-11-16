@@ -2,6 +2,7 @@ package org.csu.mypetstore.repository;
 
 import org.csu.mypetstore.domain.Item;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ItemDAO {
@@ -15,4 +16,5 @@ public interface ItemDAO {
 
     Item getItem(String itemId);
     List<Item> getItemListByProductWithPage(String productId, int page);
+    BigDecimal getItemPrice(String itemId);
 }

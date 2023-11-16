@@ -4,7 +4,7 @@ import org.csu.mypetstore.domain.Account;
 
 public interface AccountDAO {
     Account getAccountByUsername(String username);
-
+    Account getAccountByEmail(String email);
     Account getAccountByUsernameAndPassword(Account account);
     boolean isExist(String username);
     boolean isEmailExist(String email);
@@ -20,4 +20,6 @@ public interface AccountDAO {
     void updateProfile(Account account);
 
     void updateSignon(Account account);
+    String getPasswordByUsername(String username);
+    void updatePasswordByUsername(String username,String password);
 }

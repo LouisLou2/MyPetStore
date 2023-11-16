@@ -22,6 +22,7 @@ public class ConfirmOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestResponse restResponse = new RestResponse();
         restResponse.setCode(ResultCodeEnum.SUCCESS);
+        String orderId=null;
         try{
             HttpSession session = req.getSession();
             //拿到订单对象
@@ -38,7 +39,8 @@ public class ConfirmOrderServlet extends HttpServlet {
                 CartService.deleteCartItem(account.getUsername(),itemId);
             }
             //将订单对象存入数据库
-            OrderService.insertOrder(order);
+            orderId=OrderService.insertOrder(order);
+            restResponse.insertLoading("orderId",orderId);
         }catch (Exception e){
             restResponse.setCode(ResultCodeEnum.FAIL);
             restResponse.insertLoading("error",e.getMessage());

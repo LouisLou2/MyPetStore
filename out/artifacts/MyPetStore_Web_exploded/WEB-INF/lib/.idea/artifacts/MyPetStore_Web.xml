@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="MyPetStore:Web">
-    <output-path>$PROJECT_DIR$/out/artifacts/MyPetStore_Web</output-path>
-    <root id="archive" name="MyPetStore_Web.war">
-      <element id="artifact" artifact-name="MyPetStore:Web exploded" />
-    </root>
-  </artifact>
-</component>

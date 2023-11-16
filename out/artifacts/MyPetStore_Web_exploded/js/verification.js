@@ -36,10 +36,10 @@ function hasBlank(formElements){
 }
 function getFields(formElements){
     // 创建一个空对象，用于存储表单数据
-    var formDataObject = {};
-// 遍历表单元素，并将其添加到 formDataObject
-    for (var i = 0; i < formElements.length; i++) {
-        var element = formElements[i];
+    let formDataObject = {};
+    // 遍历表单元素，并将其添加到 formDataObject
+    for (let i = 0; i < formElements.length; i++) {
+        let element = formElements[i];
         // 检查元素是否为表单字段
         if (element.name) {
             if (element.type === "checkbox" || element.type === "radio") {
@@ -82,7 +82,10 @@ function signIn(formid,url,preparedParams=undefined) {
             alert(response.data.loadings.error);
             return;
         }
-        const newLocation = response.data.location;
+        let newLocation = response.data.location;
+        if(newLocation==null||newLocation==undefined||newLocation.trim()===""){
+            newLocation=localStorage.getItem('originalLink');
+        }
         console.log("at:verification.signIn "+newLocation);
         window.location.replace(newLocation);
     }).catch(function (error) {
@@ -127,12 +130,14 @@ function CheckAndSubmit(formid,url,preparedParams=undefined) {
     }).then(function (response) {
         console.log(response);
         if(parseInt(response.data.code)!==0){
-            console.log(response.data.code);
-            console.log(parseInt(response.data.code));
             alert(response.data.loadings.error);
             return;
         }else{
             let newLocation = response.data.location;
+            console.log("at:verification.CheckAndSubmit "+newLocation);
+            if(newLocation==null||newLocation==undefined||newLocation.trim()===""){
+                newLocation=localStorage.getItem('originalLink');
+            }
             window.location.replace(newLocation);
         }
     }).catch(function (error) {

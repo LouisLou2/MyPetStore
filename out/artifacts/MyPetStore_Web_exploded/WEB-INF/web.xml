@@ -37,6 +37,35 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/rest/shop/addcart/*</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/rest/shop/removecart/*</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/rest/shop/updatecart/*</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/shop/update/cartQuantities</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/rest/shop/view/orderlist</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/page/shop/newOrder</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/page/shop/confirm/order</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/shop/view/order</url-pattern> <!-- 可以根据需要修改 URL 模式 -->
+    </filter-mapping>
+    
     
     <servlet>
         <servlet-name>MainServlet</servlet-name>
@@ -145,6 +174,15 @@
         <url-pattern>/rest/shop/removecart/item</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.UpdateCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <url-pattern>/rest/shop/updatecart/item</url-pattern>
+    </servlet-mapping>
+
     <!--更新购物车数量-->
     <servlet>
         <servlet-name>UpdateCartQuantitiesServlet</servlet-name>
@@ -222,7 +260,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateAccountServlet</servlet-name>
-        <url-pattern>/account/update</url-pattern>
+        <url-pattern>/rest/account/update</url-pattern>
     </servlet-mapping>
     
     <!--?跳转-->

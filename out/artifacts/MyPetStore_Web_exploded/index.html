@@ -1,51 +1,30 @@
-<HTML><HEAD><TITLE>JPetStore Demo</TITLE>
-  <META content="text/html; charset=windows-1252" http-equiv=Content-Type>
-</HEAD>
-
-<BODY bgColor=white>
-<TABLE background="images/bkg-topbar.gif" border=0 cellSpacing=0 cellPadding=5 width="100%">
-  <TBODY>
-  <TR>
-    <TD><A href="shop/index.shtml"><IMG border=0 src="images/logo-topbar.gif"></A> </TD>
-    <TD align=right><A href="shop/index.shtml"><IMG border=0 name=img_cart src="images/cart.gif"></A>
-      <IMG border=0 src="images/separator.gif">
-
-      <A href="shop/signonForm.shtml" >
-        <IMG border=0 name=img_signin src="images/sign-in.gif"></A>
-      <IMG border=0
-           src="images/separator.gif"> <A
-              href="help.html"
-      ><IMG border=0
-            name=img_help src="images/help.gif"></A>
-    </TD>    <TD align=left valign=bottom>
-    <FORM action="shop/searchProducts.shtml">
-      <INPUT name=keyword size=14> <INPUT border=0
-                                          src="images/search.gif"
-                                          type=image> </FORM>
-  </TD>
-  </TR>
-  </TBODY></TABLE>
-<TABLE border=0 cellSpacing=0 width="100%">
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=100%>
-      <p>&nbsp;</p>
-      <p align="center"><b>Welcome to JPetStore 4</b></p>
-      <p align="center"><a href="main">Enter the Store</a></p>
-    </TD>
-  </TR>
-  </TBODY>
-</TABLE>
-
-<P>&nbsp;</P>
-
-<P align="center">
-
-  <a href="http://www.ibatis.com"><IMG border=0 align="center" src="images/poweredby.gif"></a>
-
-</P>
-
-</BODY>
-
-</HTML>
-
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/thirdparty/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="js/thirdparty/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="js/thirdparty/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="js/thirdparty/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+  <div class="row" style="height: 100px"></div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-10">
+      <div class="jumbotron" onclick="function launch() {
+          window.location.href = 'main';      
+      }
+      launch()" style="background-image: url(images/widgetsource/board.jpg); background-size: cover; background-repeat: no-repeat">
+        <h1 class="display-4">MyPetStore</h1>
+        <p class="lead">Welcome to MyPetStore, Your One-Stop Destination for All Your Furry Companions Needs! Where Love Meets Animal Friends.</p>
+        <hr class="my-4">
+        <p>This is a simple petstore demo. Click to launch.</p>
+        <a class="btn btn-primary btn-lg" href="main" role="button">Launch</a>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+</body>
+</html>

@@ -6,7 +6,7 @@
 <%--决定是否显示尚未登录的warning条--%>
 <c:if test="${sessionScope.account == null}">
 	<div id="signInWarningAlert" class="alert alert-warning alert-dismissible fade show" role="alert">
-		You are not logged in. Click to <strong><a onclick="SignInWithOriginal('/shop/view/item?itemId=${requestScope.item.itemId}')">log in</a></strong>!
+		You are not logged in. Click to <strong><a onclick="SignInWithOriginal(window.location.href)">log in</a></strong>!
 		<button type="button" class="close"  data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
@@ -36,13 +36,13 @@
 					<div class="col-md-8">
 						<div class="card-body">
 							<h5 class="card-title" style="text-align: left;">${requestScope.item.itemId}</h5>
-							<p class="card-text" style="text-align: left;">${requestScope.item.product.name}</p>
-							<p class="card-text" style="text-align: left;">${requestScope.item.product.description}</p>
-							<p class="card-text" style="text-align: left;"><fmt:formatNumber value="${requestScope.item.listPrice}" pattern="$#,##0.00" /></p>
+							<p class="card-text m-1" style="text-align: left;">${requestScope.item.product.name}</p>
+							<p class="card-text m-1" style="text-align: left;">${requestScope.item.product.description}</p>
+							<h3 class="card-text ml-0" style="text-align: left;"><span class="badge badge-success m-2"><fmt:formatNumber value="${requestScope.item.listPrice}" pattern="$#,##0.00" /></span></h3>
 							<p class="card-text" style="text-align: left;"><c:if test="${requestScope.item.quantity <= 0}">
 								Back ordered.
 							</c:if> <c:if test="${requestScope.item.quantity > 0}">
-								${requestScope.item.quantity} in stock.
+								<strong>${requestScope.item.quantity}</strong> In Stock
 							</c:if></p>
 							<div class="col-md-7 mb-1" style="padding-left: 0">
 								<input type="number" class="form-control" id="addnumber" placeholder="Choose Quantity" value="1" min="1" required>
@@ -73,7 +73,7 @@
 				</button>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="SignInWithOriginal('/shop/view/item?itemId=${requestScope.item.itemId}')">Sign In</button>
+				<button type="button" class="btn btn-primary" onclick="SignInWithOriginal(window.location.href)">Sign In</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			</div>
 		</div>

@@ -38,11 +38,17 @@ public class AccountValidator {
                 errorinfo.put(key,"can not be empty");
             }
         }
-        if(!FormatUtil.checkEmail((String) params.get("email"))){
-            errorinfo.put("email","invalid email address");
+        String email= (String) params.get("email");
+        String phone= (String) params.get("phone");
+        if(email!=null){
+            if(!FormatUtil.checkEmail(email)){
+                errorinfo.put("email","invalid email address");
+            }
         }
-        if(!FormatUtil.checkPhone((String) params.get("phone"))){
-            errorinfo.put("phone","invalid phone number");
+        if(phone!=null){
+            if(!FormatUtil.checkPhone(phone)){
+                errorinfo.put("phone","invalid phone number");
+            }
         }
         String username= (String) params.get("username");
         if(username!=null){
@@ -50,13 +56,11 @@ public class AccountValidator {
                 errorinfo.put("username","username already exist");
             }
         }
-        String email= (String) params.get("email");
         if(email!=null){
             if(AccountService.isEmailExist(email)){
                 errorinfo.put("email","email already exist");
             }
         }
-        String phone= (String) params.get("phone");
         if(phone!=null){
             if(AccountService.isPhoneExist(phone)){
                 errorinfo.put("phone","phone already exist");

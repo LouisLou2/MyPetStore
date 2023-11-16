@@ -4,8 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.CatalogService;
 
@@ -23,16 +21,10 @@ public class SearchProductServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         keyword = request.getParameter("keyword");
-        //request.setAttribute("keyword", keyword);
-        CatalogService service = new CatalogService();
-        List<Product> productList = service.searchProductList(keyword);
-
+        List<Product> productList = CatalogService.searchProductList(keyword);
         //保存数据
-        HttpSession session = request.getSession();
-        session.setAttribute("keyword", keyword);
-        session.setAttribute("productList", productList);
-
-        Account account = (Account)session.getAttribute("account");
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("productList", productList);
         //跳转页面
         request.getRequestDispatcher(SEARCH_PRODUCTS).forward(request, response);
     }

@@ -1,10 +1,5 @@
 package org.csu.mypetstore.constant.enums;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Map;
-
 public enum ErrorEnum {
     ;
     
@@ -76,6 +71,19 @@ public enum ErrorEnum {
 
         public void setErrortype(int errortype) {
             this.errortype = errortype;
+        }
+    }
+    public enum ShopError{
+        INSUFFICIENT(1,"库存不足"),
+        INVALID_PARAM(2,"参数错误");
+        private int code;
+        private String message;
+        ShopError(int i, String s) {
+            this.code=i;
+            this.message=s;
+        }
+        public String getMessage(){
+            return this.message;
         }
     }
 }

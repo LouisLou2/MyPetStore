@@ -10,6 +10,7 @@ import org.csu.mypetstore.repository.Impl.ProductDAOImpl;
 import org.csu.mypetstore.repository.ItemDAO;
 import org.csu.mypetstore.repository.ProductDAO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CatalogService {
@@ -79,6 +80,9 @@ public class CatalogService {
 
     public static Item getItem(String itemId) {
         return itemDAO.getItem(itemId);
+    }
+    public static BigDecimal getItemPrice(String itemId) {
+        return itemDAO.getItemPrice(itemId);
     }
     public static int getInventoryQuantity(String itemId) {
         return itemDAO.getInventoryQuantity(itemId);

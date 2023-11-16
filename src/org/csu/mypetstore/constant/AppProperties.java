@@ -7,5 +7,6 @@ public interface AppProperties {
     String MAIN_SERVLET = "/main";
     String APP_ADDRESS="localhost";
     String APP_PORT="8080";
-    String APP_ROOT_WITH_ADDRESS_AND_PORT="http://"+APP_ADDRESS+":"+APP_PORT+APP_ROOT;
+    String ADDRESS_AND_PORT="http://"+APP_ADDRESS+":"+APP_PORT;
+    String APP_ROOT_WITH_ADDRESS_AND_PORT=ADDRESS_AND_PORT+APP_ROOT;
 }

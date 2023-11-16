@@ -67,7 +67,7 @@ function isEmailValid(email) {
     const EMAIL_REGEX = /[\w\.\-]+@([\w\-]+\.)+[\w\-]+/;
     return EMAIL_REGEX.test(email);
 }
-function sendEmailCodeClicked(targetElement) {
+function sendEmailCodeClicked(targetElement,aexpectation) {
     let email = document.getElementsByName("email")[0].value;
     if(!isEmailValid(email)){
         console.log("The Email Address is Invalid!");
@@ -78,11 +78,14 @@ function sendEmailCodeClicked(targetElement) {
     setTime(targetElement);
     let url= emailCodeUrl;
     console.log(email);
+    console.log("aexpectation");
+    console.log(aexpectation);
     axios.request({
         url: url,
         method: 'get',
         params: {
-            email: email
+            email: email,
+            expectation: aexpectation,
         }
     }).then(function (response) {
         if(parseInt(response.data.code) !== 0){

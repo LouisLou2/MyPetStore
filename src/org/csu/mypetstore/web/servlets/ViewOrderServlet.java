@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.csu.mypetstore.constant.enums.TipsEnum;
-import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.service.OrderService;
 
@@ -42,7 +41,6 @@ public class ViewOrderServlet extends HttpServlet {
         //将其放入request中
         request.setAttribute("order", order);
         request.setAttribute("message", TipsEnum.submitOrderSuccess);
-        Account account = (Account) session.getAttribute("account");
         request.getRequestDispatcher(VIEWORDER).forward(request, response);
     }
 }

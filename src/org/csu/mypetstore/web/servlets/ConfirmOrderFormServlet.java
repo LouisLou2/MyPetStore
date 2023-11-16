@@ -16,7 +16,7 @@ public class ConfirmOrderFormServlet extends HttpServlet {
         Order order=(Order)request.getSession().getAttribute("order");
         String cardType = request.getParameter("cardType");
         String creditCard = request.getParameter("creditCard");
-        String expireDate = request.getParameter("expireDate");
+        String expiryDate = request.getParameter("expiryDate");
         String billToFirstName = request.getParameter("billToFirstName");
         String billToLastName = request.getParameter("billToLastName");
         String billCountry = request.getParameter("billCountry");
@@ -28,7 +28,7 @@ public class ConfirmOrderFormServlet extends HttpServlet {
         //set bill info
         order.setCardType(cardType);
         order.setCreditCard(creditCard);
-        order.setExpiryDate(expireDate);
+        order.setExpiryDate(expiryDate);
         order.setBillToFirstName(billToFirstName);
         order.setBillToLastName(billToLastName);
         order.setBillCountry(billCountry);
