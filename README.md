@@ -10,6 +10,7 @@
 1. 打开`resouce`文件夹。其中放置了一些`.properties`文件，你可以在这里填入你自己的配置信息。
 2. 执行`resouce/mypetstore-dump.sql`建立并初始化该项目需要的数据库表
 3. 运行项目配置自动生效。
+
 **重要提示：**
 确保除了Maven中的依赖被填入artifact的`WEB-INF/lib`之外，本项目的`lib`文件夹中的jar文件也需要添加。
 `src/org/csu/mypetstore/constant/AppProperties.java`记录了此应用的名字、地址、端口和路径。运行时，请务必将此WebApp在Tomcat中的配置与其保持一致。如果你想要修改配置，请将`AppProperties.java`一同修改。
