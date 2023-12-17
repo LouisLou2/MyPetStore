@@ -8,8 +8,8 @@
 
 **确保这些环境具备后，请执行以下步骤：**
 1. 打开`resouce`文件夹。其中放置了一些`.properties`文件，你可以在这里填入你自己的配置信息。
-2. 运行项目以使配置生效。
-3. 执行`resouce/mypetstore-dump.sql`建立并初始化该项目需要的数据库表
+2. 执行`resouce/mypetstore-dump.sql`建立并初始化该项目需要的数据库表
+3. 运行项目配置自动生效。
 
 **重要提示：**
 确保除了Maven中的依赖被填入artifact的`WEB-INF/lib`之外，本项目的`lib`文件夹中的jar文件也需要添加。
