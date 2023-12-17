@@ -3,6 +3,7 @@ package org.csu.mypetstore.service;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.domain.ProductBasic;
 import org.csu.mypetstore.repository.CategoryDAO;
 import org.csu.mypetstore.repository.Impl.CategoryDAOImpl;
 import org.csu.mypetstore.repository.Impl.ItemDAOImpl;
@@ -69,6 +70,9 @@ public class CatalogService {
     /* TODO enable using more than one keyword*/
     public static List<Product> searchProductList(String keyword) {
         return productDAO.searchProductList("%" + keyword.toLowerCase() + "%");
+    }
+    public static List<ProductBasic> searchProductIdNameListWithLimit(String keyword, int page) {
+        return productDAO.searchProductIdNameList("%" + keyword.toLowerCase() + "%", page);
     }
 
     public static List<Item> getItemListByProduct(String productId) {

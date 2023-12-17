@@ -9,6 +9,12 @@ section h2 {
   font-weight: 700;
   text-align: center;
 }
+button{
+  border-width: 0;
+}
+li{
+  border-width: 0;
+}
 @media only screen and (min-width: 1170px) {
   section h2 {
     margin: 2em auto 0;

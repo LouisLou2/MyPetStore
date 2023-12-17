@@ -1,6 +1,7 @@
 package org.csu.mypetstore.repository;
 
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.domain.ProductBasic;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface ProductDAO {
     Product getProduct(String productId);
     int getProductCount(String categoryId);
     List<Product> searchProductList(String keywords);
+    List<ProductBasic> searchProductIdNameList(String keywords, int num);
     String getPictureLocation(String productId);
 }

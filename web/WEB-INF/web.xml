@@ -109,6 +109,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>SearchProductBasicInfoServlet</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.SearchProductBasicInfoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SearchProductBasicInfoServlet</servlet-name>
+        <url-pattern>/rest/shop/view/product_basic_list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ProductInfoServlet</servlet-name>
         <servlet-class>org.csu.mypetstore.web.servlets.restful.ProductInfoServlet</servlet-class>
     </servlet>

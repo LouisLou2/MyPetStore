@@ -1,16 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Summer
-  Date: 2018/12/10
-  Time: 15:26
-  To change this template use File | Settings | File Templates.
---%>
 <%@include file="../common/IncludeTop.jsp"%>
-<div id="Welcome">
-    <div id="WelcomeContent">
-        Welcome to MyPetStore!
-    </div>
-</div>
 
 <div id="Main">
     <div id="Sidebar">
@@ -36,18 +24,12 @@
         <div id="MainImageContent">
             <!--中间显示栏-->
             <map name="estoremap">
-                <area alt="BIRDS" coords="72,2,280,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=BIRDS" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
-                <area alt="FISH" coords="2,180,72,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=FISH" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
-                <area alt="DOGS" coords="60,250,130,320" href="${pageContext.request.contextPath}/shop/view/category?categoryId=DOGS" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
-                <area alt="REPTILES" coords="140,270,210,340" href="${pageContext.request.contextPath}/shop/view/category?categoryId=REPTILES" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
-                <area alt="CATS" coords="225,240,295,310" href="${pageContext.request.contextPath}/shop/view/category?categoryId=CATS" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
-                <area alt="BIRDS" coords="280,180,350,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=BIRDS" shape="rect"
-                      onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                <area alt="BIRDS" coords="72,2,280,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=BIRDS" shape="rect"/>
+                <area alt="FISH" coords="2,180,72,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=FISH" shape="rect"/>
+                <area alt="DOGS" coords="60,250,130,320" href="${pageContext.request.contextPath}/shop/view/category?categoryId=DOGS" shape="rect"/>
+                <area alt="REPTILES" coords="140,270,210,340" href="${pageContext.request.contextPath}/shop/view/category?categoryId=REPTILES" shape="rect"/>
+                <area alt="CATS" coords="225,240,295,310" href="${pageContext.request.contextPath}/shop/view/category?categoryId=CATS" shape="rect"/>
+                <area alt="BIRDS" coords="280,180,350,250" href="${pageContext.request.contextPath}/shop/view/category?categoryId=BIRDS" shape="rect"/>
             </map>
             <img height="355" src="${pageContext.request.contextPath}/images/splash.gif" align="middle" usemap="#estoremap" width="350" />
         </div>

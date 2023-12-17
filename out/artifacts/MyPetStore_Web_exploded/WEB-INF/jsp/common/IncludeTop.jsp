@@ -21,10 +21,11 @@
     <script src="${pageContext.request.contextPath }/js/thirdparty/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath }/js/thirdparty/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath }/js/TipAlertModal.js"></script>
+    <script src="${pageContext.request.contextPath }/js/autocomplete.js"></script>
+    <script src="${pageContext.request.contextPath }/js/generic_tools.js"></script>
     <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/jpetstore.css" type="text/css" media="screen" />
     <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/searchProduct.css" type="text/css" media="screen" />
     <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/cartChange.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mouseEventInform.css" type="text/css" media="screen" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
@@ -91,10 +92,12 @@
                 </li>
             </ul>
             <form class="form-inline my-0 my-lg-0" action="${pageContext.request.contextPath}/shop/search/product" method="post">
-                <input id="keyword" name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <div class="auto hidden" id="auto">
-                    <div class="auto_out">1</div>
-                    <div class="auto_out">2</div>
+                <div class="col">
+                    <input id="keyword" name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <div class="row">
+                        <div class="auto" id="auto">
+                    </div>
+                </div>
                 </div>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchProducts">Search</button>
                 <script src="${pageContext.request.contextPath}/js/searchProduct.js"></script>
@@ -118,4 +121,8 @@
         localStorage.setItem('active','1');
         localStorage.setItem('originalLink',window.location.href);
     }
+    let searchInput= document.getElementById('keyword');
+    initAutocompleteList('auto');
+    searchInput.addEventListener('input',()=>throttle(fill_autocomplete("auto",searchInput.value),302));
+    document.addEventListener('click',()=>close_autocompleteList());
 </script>

@@ -1,6 +1,7 @@
 package org.csu.mypetstore.repository.Impl;
 
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.domain.ProductBasic;
 import org.csu.mypetstore.repository.ProductDAO;
 import org.csu.mypetstore.utils.DBUtil;
 
@@ -23,7 +24,7 @@ public class ProductDAOImpl implements ProductDAO {
             "FROM PRODUCT WHERE PRODUCTID = ?";
     private static final String searchProductListString = "select PRODUCTID, NAME, DESCN as description, " +
             "CATEGORY as categoryId, PICTURE as picture from PRODUCT WHERE lower(name) like ?";
-    
+    private static final String searchProductIdNameListString="select PRODUCTID, NAME from PRODUCT WHERE lower(name) like ? limit ?";//加入限制
     static{
         INSTANCE = new ProductDAOImpl();
     }
@@ -142,7 +143,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<Product> searchProductList(String keywords) {
-        List<Product> productList = new ArrayList<Product>();
+        List<Product> productList = new ArrayList<>();
         ResultSet resultSet = null;
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -191,5 +192,32 @@ public class ProductDAOImpl implements ProductDAO {
             DBUtil.closeConnection(connection);
         }
         return pictureLocation;
+    }
+    public List<ProductBasic> searchProductIdNameList(String keywords,int num){
+        List<ProductBasic> productList = new ArrayList<>();
+        ResultSet resultSet = null;
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            pStatement = connection.prepareStatement(searchProductIdNameListString);
+            pStatement.setString(1, keywords);
+            pStatement.setInt(2, num);
+            resultSet = pStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ProductBasic product = new ProductBasic();
+                product.setProductId(resultSet.getString(1));
+                product.setName(resultSet.getString(2));
+                productList.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(pStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return productList;
     }
 }
