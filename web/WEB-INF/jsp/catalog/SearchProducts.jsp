@@ -1,8 +1,4 @@
 <%@ include file="../common/IncludeTop.jsp"%>
-
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
-</div>
 <div class="container">
 	<div class="row">
 		<div class="col"></div>

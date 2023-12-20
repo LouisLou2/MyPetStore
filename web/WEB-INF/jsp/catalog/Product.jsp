@@ -1,8 +1,4 @@
 <%@ include file="../common/IncludeTop.jsp"%>
-
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/shop/view/category?categoryId=${requestScope.product.categoryId}">Return to ${requestScope.product.categoryId}</a>
-</div>
 <%--<h2>${requestScope.product.name}</h2>--%>
 <div class="container">
 	<div class="row">
