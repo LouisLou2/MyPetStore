@@ -27,7 +27,7 @@
 							<label for="vCode">Image Code</label>
 							<div class="form-row">
 								<div class="col-md-4 mb-3">
-									<input type="text" id="vCode" class="form-control" name="vCode" placeholder="Email Code" value="" required>
+									<input type="text" id="vCode" class="form-control" name="vCode" placeholder="Enter Image Code" value="" required>
 								</div>
 								<div class="col-md-4 mb-3">
 									<img id ="img_code" border="0" src="" name="checkcode" width="50%" height="80%">

@@ -1,8 +1,4 @@
 <%@ include file="../common/IncludeTop.jsp"%>
-
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/shop/view/product?productId=${requestScope.product.productId}">Return to ${requestScope.product.productId}</a>
-</div>
 <%--决定是否显示尚未登录的warning条--%>
 <c:if test="${sessionScope.account == null}">
 	<div id="signInWarningAlert" class="alert alert-warning alert-dismissible fade show" role="alert">

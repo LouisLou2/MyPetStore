@@ -95,7 +95,7 @@
                 <div class="col">
                     <input id="keyword" name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <div class="row">
-                        <div class="auto" id="auto">
+                        <div class="auto" id="auto" style="z-index: 9999">
                     </div>
                 </div>
                 </div>

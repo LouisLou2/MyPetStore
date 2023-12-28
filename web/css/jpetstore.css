@@ -95,19 +95,19 @@ a:hover {
   color: #69f;
 }
 
-a.Button, a.Button:link, a.Button:visited {
-  padding: .3ex;
-  color: #fff;
-  background-color: #005e21;
-  text-decoration: none;
-  font-family: helvetica, tahoma, arial, verdana, sans-serif;
-  font-size: 1.5ex;
-}
+/*a.Button, a.Button:link, a.Button:visited {*/
+/*  padding: .3ex;*/
+/*  color: #fff;*/
+/*  background-color: #005e21;*/
+/*  text-decoration: none;*/
+/*  font-family: helvetica, tahoma, arial, verdana, sans-serif;*/
+/*  font-size: 1.5ex;*/
+/*}*/
 
-a.Button:hover {
-  color: #000;
-  background-color: #54c07a;
-}
+/*a.Button:hover {*/
+/*  color: #000;*/
+/*  background-color: #54c07a;*/
+/*}*/
 
 #Logo {
   width: 33%;
@@ -160,94 +160,10 @@ body>#Menu {
   height: 9ex;
 }
 
- {
-}
-
-#Search {
-  width: 33%;
-  height: 9ex;
-  margin: 0ex 0ex 0ex 0ex;
-  padding: 0ex 0ex 0ex 0ex;
-  border-width: 0ex 0ex .3ex 0px;
-  border-style: solid;
-  border-color: #ccc;
-  float: left;
-  text-align: center;
-  background-color: #000;
-  color: #eaac00;
-  line-height: 9ex;
-  voice-family: "\"}\"";
-  voice-family: inherit;
-  height: 9ex;
-}
-
-body>#Search {
-  height: 9ex;
-}
-
-#Search input {
-  border-width: .1ex .1ex .1ex .1ex;
-  border-style: solid;
-  border-color: #aaa;
-  background-color: #666;
-  color: #eaac00;
-}
-
 #QuickLinks {
   text-align: center;
   background-color: #FFF;
   width: 99%;
-}
-
-#PoweredBy {
-  width: 30%;
-  height: 9ex;
-  margin: 0ex 0ex 0ex 0ex;
-  padding: 0ex 0ex 0ex 0ex;
-  border-width: .3ex 0ex .3ex 0px;
-  border-style: solid;
-  border-color: #ccc;
-  float: left;
-  background-color: #000;
-  color: #fff;
-  line-height: 9ex;
-  voice-family: "\"}\"";
-  voice-family: inherit;
-  height: 9ex;
-}
-
-body>#PoweredBy {
-  height: 9ex;
-}
-
-#Banner {
-  width: 69%;
-  height: 9ex;
-  margin: 0ex 0ex 0ex 0ex;
-  padding: 0ex 0ex 0ex 0ex;
-  border-width: .3ex 0ex .3ex 0px;
-  border-style: solid;
-  border-color: #ccc;
-  float: left;
-  background-color: #000;
-  color: #fff;
-  line-height: 9ex;
-  voice-family: "\"}\"";
-  voice-family: inherit;
-  height: 9ex;
-}
-
-body>#Banner {
-  height: 9ex;
-}
-
-#Content {
-  margin: 0;
-  padding: 0ex 0ex 0ex 0ex;
-  width: 99%;
-  color: #333;
-  background-color: #FFF;
-  border-width: 0;
 }
 
 #Separator {
@@ -256,35 +172,27 @@ body>#Banner {
   height:0;
 }
 
-#Main {
-  margin: 0;
-  padding: 1ex;
-  color: #333;
-  background-color: #FFF;
-  border-width: 1ex 0ex 2ex 0px;
-  border-style: solid;
-  border-color: #fff;
-}
+/*#Main {*/
+/*  margin: 0;*/
+/*  padding: 1ex;*/
+/*  color: #333;*/
+/*  background-color: #FFF;*/
+/*  border-width: 1ex 0ex 2ex 0px;*/
+/*  border-style: solid;*/
+/*  border-color: #fff;*/
+/*}*/
 
 #Sidebar {
   float: left;
   background:inherit;
-  width: 30%;
 }
 
-#MainImage {
-  float: left;
-  background:inherit;
-  text-align:center;
-  width: 50%;
-}
-
-#Catalog {
-  padding: 1ex;
-  background:inherit;
-  text-align:center;
-}
-
+/*#MainImage {*/
+/*  float: left;*/
+/*  background:inherit;*/
+/*  text-align:center;*/
+/*  width: 50%;*/
+/*}*/
 #Catalog input[type="submit"]{
   padding: .3ex;
   color: #fff;
@@ -293,31 +201,4 @@ body>#Banner {
   font-family: helvetica, tahoma, arial, verdana, sans-serif;
   font-size: 1.5ex;
   border-width:0;
-}
-
-#Catalog input[type="submit"]:hover {
-  color: #000;
-  background-color: #54c07a;
-  cursor:pointer;
-}
-
-#BackLink{
-  padding: 1ex;
-  float: right;
-  border-width: .1ex 0ex .1ex 0px;
-  border-style: solid;
-  border-color: #000;
-}
-
-#Cart{
-  width: 69.99%;
-  float: left;
-  background-color:#fff;
-}
-
-#MyList{
-  width: 30%;
-  float: left;
-  background-color:#ccc;
-  text-align:left;
 }

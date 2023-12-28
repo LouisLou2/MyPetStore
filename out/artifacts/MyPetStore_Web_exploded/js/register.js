@@ -59,7 +59,7 @@ function giveTip(code) {
         if(!div1.classList.contains("invalid-feedback")) {
             div1.classList.add("invalid-feedback");
         }
-        div1.innerHTML = key+"Already Exists";
+        div1.innerHTML = key+" Already Exists";
         console.log(key+"already exists");
     }
 }
