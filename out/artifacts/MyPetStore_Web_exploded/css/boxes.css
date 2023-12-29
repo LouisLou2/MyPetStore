@@ -1,0 +1,10 @@
+#floatingBox {
+    width: fit-content;
+    position: fixed;
+    display: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* 设置悬浮窗的层级，使之位于页面其他内容之上 */
+}

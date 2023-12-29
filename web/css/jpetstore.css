@@ -1,0 +1,121 @@
+
+.shadow-div {
+  background-color: #fff; /* 设置背景颜色 */
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5); /* 设置阴影 */
+}
+
+li.media {
+  border: 0px solid #000; /* 边框为 1 像素的实线，可以根据需求更改颜色值 */
+  border-radius: 5px; /* 圆角半径为 5 像素，可以根据需求调整 */
+  box-shadow: 2px 2px 5px #888; /* 添加阴影，可以根据需求调整水平偏移、垂直偏移和阴影颜色 */
+  /* 为了美观，设置一定的外边距 */
+  margin: 10px 10px 0px 0px;
+}
+.simple-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.simple-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+.simple-table th,
+.simple-table td {
+  padding: 12px 15px;
+}
+.simple-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.simple-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.simple-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+.simple-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+
+.go-button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #54c07a;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.go-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.go-button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.go-button:hover span {
+  padding-right: 25px;
+}
+
+.go-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#Logo {
+  width: 33%;
+  height: 9ex;
+  margin: 0ex 0ex 0ex 0ex;
+  padding: 0ex 0ex 0ex 0ex;
+  border-width: 0ex 0ex .3ex 0px;
+  border-style: solid;
+  border-color: #ccc;
+  float: left;
+  background-color: #000;
+  color: #fff;
+  line-height: 9ex;
+  voice-family: "\"}\"";
+  voice-family: inherit;
+  height: 9ex;
+}
+
+body>#Logo {
+  height: 9ex;
+}
+
+#Separator {
+  clear:both;
+  margin: 0;
+  height:0;
+}
+#Catalog input[type="submit"]{
+  padding: .3ex;
+  color: #fff;
+  background-color: #005e21;
+  text-decoration: none;
+  font-family: helvetica, tahoma, arial, verdana, sans-serif;
+  font-size: 1.5ex;
+  border-width:0;
+}
