@@ -84,16 +84,16 @@ li.media {
   right: 0;
 }
 
-a, a:visited, a:link {
-  color: #039;
+/*a, a:visited, a:link {*/
+/*  color: #039;*/
 
-  text-decoration: none;
-  font-family: helvetica, tahoma, arial, verdana, sans-serif;
-}
+/*  text-decoration: none;*/
+/*  font-family: helvetica, tahoma, arial, verdana, sans-serif;*/
+/*}*/
 
-a:hover {
-  color: #69f;
-}
+/*a:hover {*/
+/*  color: #69f;*/
+/*}*/
 
 /*a.Button, a.Button:link, a.Button:visited {*/
 /*  padding: .3ex;*/
@@ -130,40 +130,40 @@ body>#Logo {
   height: 9ex;
 }
 
-#Menu {
-  width: 33%;
-  height: 9ex;
-  margin: 0ex 0ex 0ex 0ex;
-  padding: 0ex 0ex 0ex 0ex;
-  border-width: 0ex 0ex .3ex 0px;
-  border-style: solid;
-  border-color: #ccc;
-  float: left;
-  background-color: #000;
-  color: #eaac00;
-  text-decoration: none;
-  font-family: helvetica, tahoma, arial, verdana, sans-serif;
-  text-align: center;
-  line-height: 9ex;
-  voice-family: "\"}\"";
-  voice-family: inherit;
-  height: 9ex;
-}
+/*#Menu {*/
+/*  width: 33%;*/
+/*  height: 9ex;*/
+/*  margin: 0ex 0ex 0ex 0ex;*/
+/*  padding: 0ex 0ex 0ex 0ex;*/
+/*  border-width: 0ex 0ex .3ex 0px;*/
+/*  border-style: solid;*/
+/*  border-color: #ccc;*/
+/*  float: left;*/
+/*  background-color: #000;*/
+/*  color: #eaac00;*/
+/*  text-decoration: none;*/
+/*  font-family: helvetica, tahoma, arial, verdana, sans-serif;*/
+/*  text-align: center;*/
+/*  line-height: 9ex;*/
+/*  voice-family: "\"}\"";*/
+/*  voice-family: inherit;*/
+/*  height: 9ex;*/
+/*}*/
 
-#Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {
-  color: #eaac00;
-  text-decoration: none;
-  font-family: helvetica, tahoma, arial, verdana, sans-serif;
-}
+/*#Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {*/
+/*  color: #eaac00;*/
+/*  text-decoration: none;*/
+/*  font-family: helvetica, tahoma, arial, verdana, sans-serif;*/
+/*}*/
 
-body>#Menu {
-  height: 9ex;
-}
+/*body>#Menu {*/
+/*  height: 9ex;*/
+/*}*/
 
 #QuickLinks {
   text-align: center;
   background-color: #FFF;
-  width: 99%;
+  width: 100%;
 }
 
 #Separator {

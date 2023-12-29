@@ -1,5 +1,6 @@
 package org.csu.mypetstore.repository.Impl;
 
+import org.csu.mypetstore.domain.Dto.SimpleProduct;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.domain.ProductBasic;
 import org.csu.mypetstore.repository.ProductDAO;
@@ -8,6 +9,7 @@ import org.csu.mypetstore.utils.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,19 @@ public class ProductDAOImpl implements ProductDAO {
     private static final String searchProductListString = "select PRODUCTID, NAME, DESCN as description, " +
             "CATEGORY as categoryId, PICTURE as picture from PRODUCT WHERE lower(name) like ?";
     private static final String searchProductIdNameListString="select PRODUCTID, NAME from PRODUCT WHERE lower(name) like ? limit ?";//加入限制
+    private static final String getIdListByCategoryWithLimitString="select PRODUCTID, NAME, PICTURE from PRODUCT WHERE CATEGORY = ? limit ?";//加入限制
+    private static final String getRandIdListByCategoryWithLimitString="select PRODUCTID, NAME, PICTURE from PRODUCT WHERE CATEGORY = ? order by rand() limit ?";//加入限制
     static{
         INSTANCE = new ProductDAOImpl();
+    }
+    public static Product equipProduct(ResultSet resultSet) throws SQLException {
+        Product product = new Product();
+        product.setProductId(resultSet.getString(1));
+        product.setName(resultSet.getString(2));
+        product.setDescription(resultSet.getString(3));
+        product.setCategoryId(resultSet.getString(4));
+        product.setPicture(resultSet.getString(5));
+        return product;
     }
     @Override
     public List<Product> getProductListByCategory(String categoryId) {
@@ -40,13 +53,7 @@ public class ProductDAOImpl implements ProductDAO {
             pStatement.setString(1, categoryId);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {
-                Product product = new Product();
-                product.setProductId(resultSet.getString(1));
-                product.setName(resultSet.getString(2));
-                product.setDescription(resultSet.getString(3));
-                product.setCategoryId(resultSet.getString(4));
-                product.setPicture(resultSet.getString(5));
-                products.add(product);
+                products.add(equipProduct(resultSet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,13 +78,7 @@ public class ProductDAOImpl implements ProductDAO {
             pStatement.setInt(3, PAGE_SIZE);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {
-                Product product = new Product();
-                product.setProductId(resultSet.getString(1));
-                product.setName(resultSet.getString(2));
-                product.setDescription(resultSet.getString(3));
-                product.setCategoryId(resultSet.getString(4));
-                product.setPicture(resultSet.getString(5));
-                products.add(product);
+                products.add(equipProduct(resultSet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,12 +125,7 @@ public class ProductDAOImpl implements ProductDAO {
             pStatement.setString(1, productId);
             resultSet = pStatement.executeQuery();
             if(resultSet.next()){
-                product = new Product();
-                product.setProductId(resultSet.getString(1));
-                product.setName(resultSet.getString(2));
-                product.setDescription(resultSet.getString(3));
-                product.setCategoryId(resultSet.getString(4));
-                product.setPicture(resultSet.getString(5));
+                product = equipProduct(resultSet);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -152,15 +148,8 @@ public class ProductDAOImpl implements ProductDAO {
             pStatement = connection.prepareStatement(searchProductListString);
             pStatement.setString(1, keywords);
             resultSet = pStatement.executeQuery();
-
             while (resultSet.next()) {
-                Product product = new Product();
-                product.setProductId(resultSet.getString(1));
-                product.setName(resultSet.getString(2));
-                product.setDescription(resultSet.getString(3));
-                product.setCategoryId(resultSet.getString(4));
-                product.setPicture(resultSet.getString(5));
-                productList.add(product);
+                productList.add(equipProduct(resultSet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,6 +199,29 @@ public class ProductDAOImpl implements ProductDAO {
                 product.setProductId(resultSet.getString(1));
                 product.setName(resultSet.getString(2));
                 productList.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(pStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return productList;
+    }
+    public List<SimpleProduct>getIdListByCategoryWithLimit(String categoryId, int limit, boolean rand){
+        List<SimpleProduct> productList = new ArrayList<>();
+        ResultSet resultSet = null;
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            pStatement = connection.prepareStatement(rand?getRandIdListByCategoryWithLimitString:getIdListByCategoryWithLimitString);
+            pStatement.setString(1, categoryId);
+            pStatement.setInt(2, limit);
+            resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                productList.add(new SimpleProduct(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3)));
             }
         } catch (Exception e) {
             e.printStackTrace();

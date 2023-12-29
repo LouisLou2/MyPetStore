@@ -25,6 +25,12 @@ public class ItemDAOImpl implements ItemDAO {
             "  ATTR5 AS attribute5, QTY AS quantity " +
             "  FROM ITEM I, PRODUCT P, INVENTORY V " +
             "  WHERE I.PRODUCTID = ? and P.PRODUCTID = I.PRODUCTID and I.ITEMID = V.ITEMID LIMIT ?, ?";
+    private static final String getRandItemListWithPageString="  SELECT I.ITEMID, LISTPRICE, UNITCOST, SUPPLIER AS supplierId, I.PRODUCTID AS \"product.productId\", " +
+            "  NAME AS \"product.name\", DESCN AS \"product.description\", CATEGORY AS \"product.categoryId\", PICTURE AS \"product.picture\", " +
+            "  STATUS, ATTR1 AS attribute1, ATTR2 AS attribute2, ATTR3 AS attribute3, ATTR4 AS attribute4, " +
+            "  ATTR5 AS attribute5, QTY AS quantity " +
+            "  FROM ITEM I, PRODUCT P, INVENTORY V " +
+            "  WHERE I.PRODUCTID = ? and P.PRODUCTID = I.PRODUCTID and I.ITEMID = V.ITEMID ORDER BY RAND() LIMIT ?, ?";
     private static final String decrementInventoryQuantityString = "UPDATE INVENTORY SET QTY = QTY - ? " +
             "WHERE ITEMID = ?";
     private static final String updateInventoryQuantityString = "UPDATE INVENTORY SET QTY = ? " +
@@ -99,28 +105,8 @@ public class ItemDAOImpl implements ItemDAO {
             pStatement.setString(1, productId);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {
-                Item item = new Item();
-                item.setItemId(resultSet.getString(1));
-                item.setListPrice(resultSet.getBigDecimal(2));
-                item.setUnitCost(resultSet.getBigDecimal(3));
-                item.setSupplierId(resultSet.getInt(4));
-                Product product = new Product();
-                product.setProductId(resultSet.getString(5));
-                product.setName(resultSet.getString(6));
-                product.setDescription(resultSet.getString(7));
-                product.setCategoryId(resultSet.getString(8));
-                product.setPicture(resultSet.getString(9));
-                item.setProduct(product);
-                item.setStatus(resultSet.getString(10));
-                item.setAttribute1(resultSet.getString(11));
-                item.setAttribute2(resultSet.getString(12));
-                item.setAttribute3(resultSet.getString(13));
-                item.setAttribute4(resultSet.getString(14));
-                item.setAttribute5(resultSet.getString(15));
-                item.setQuantity(resultSet.getInt(16));
-                itemList.add(item);
+                Item item = EquipItem(resultSet);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -168,25 +154,7 @@ public class ItemDAOImpl implements ItemDAO {
             pStatement.setString(1, itemId);
             resultSet = pStatement.executeQuery();
             if (resultSet.next()) {
-                item = new Item();
-                item.setItemId(resultSet.getString(1));
-                item.setListPrice(resultSet.getBigDecimal(2));
-                item.setUnitCost(resultSet.getBigDecimal(3));
-                item.setSupplierId(resultSet.getInt(4));
-                Product product = new Product();
-                product.setProductId(resultSet.getString(5));
-                product.setName(resultSet.getString(6));
-                product.setDescription(resultSet.getString(7));
-                product.setCategoryId(resultSet.getString(8));
-                product.setPicture(resultSet.getString(9));
-                item.setProduct(product);
-                item.setStatus(resultSet.getString(10));
-                item.setAttribute1(resultSet.getString(11));
-                item.setAttribute2(resultSet.getString(12));
-                item.setAttribute3(resultSet.getString(13));
-                item.setAttribute4(resultSet.getString(14));
-                item.setAttribute5(resultSet.getString(15));
-                item.setQuantity(resultSet.getInt(16));
+                item = EquipItem(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -197,7 +165,28 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return item;
     }
-
+    public static Item EquipItem(ResultSet resultSet) throws SQLException {
+        Item item = new Item();
+        item.setItemId(resultSet.getString(1));
+        item.setListPrice(resultSet.getBigDecimal(2));
+        item.setUnitCost(resultSet.getBigDecimal(3));
+        item.setSupplierId(resultSet.getInt(4));
+        Product product = new Product();
+        product.setProductId(resultSet.getString(5));
+        product.setName(resultSet.getString(6));
+        product.setDescription(resultSet.getString(7));
+        product.setCategoryId(resultSet.getString(8));
+        product.setPicture(resultSet.getString(9));
+        item.setProduct(product);
+        item.setStatus(resultSet.getString(10));
+        item.setAttribute1(resultSet.getString(11));
+        item.setAttribute2(resultSet.getString(12));
+        item.setAttribute3(resultSet.getString(13));
+        item.setAttribute4(resultSet.getString(14));
+        item.setAttribute5(resultSet.getString(15));
+        item.setQuantity(resultSet.getInt(16));
+        return item;
+    }
     public List<Item> getItemListByProductWithPage(String productId, int page) {
         List<Item> itemList = new ArrayList<Item>();
         ResultSet resultSet = null;
@@ -211,26 +200,7 @@ public class ItemDAOImpl implements ItemDAO {
             pStatement.setInt(3, PAGE_SIZE);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {
-                Item item = new Item();
-                item.setItemId(resultSet.getString(1));
-                item.setListPrice(resultSet.getBigDecimal(2));
-                item.setUnitCost(resultSet.getBigDecimal(3));
-                item.setSupplierId(resultSet.getInt(4));
-                Product product = new Product();
-                product.setProductId(resultSet.getString(5));
-                product.setName(resultSet.getString(6));
-                product.setDescription(resultSet.getString(7));
-                product.setCategoryId(resultSet.getString(8));
-                product.setPicture(resultSet.getString(9));
-                item.setProduct(product);
-                item.setStatus(resultSet.getString(10));
-                item.setAttribute1(resultSet.getString(11));
-                item.setAttribute2(resultSet.getString(12));
-                item.setAttribute3(resultSet.getString(13));
-                item.setAttribute4(resultSet.getString(14));
-                item.setAttribute5(resultSet.getString(15));
-                item.setQuantity(resultSet.getInt(16));
-                itemList.add(item);
+                itemList.add(EquipItem(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -241,7 +211,30 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return itemList;
     }
-
+    public List<Item> getItemListByProductWithLimit(String productId, int limit, boolean rand){
+        List<Item> itemList = new ArrayList<Item>();
+        ResultSet resultSet = null;
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+            connection = DBUtil.getConnection();
+            pStatement = connection.prepareStatement(rand?getRandItemListWithPageString:getItemListWithPageString);
+            pStatement.setString(1, productId);
+            pStatement.setInt(2, 0);
+            pStatement.setInt(3, limit);
+            resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                itemList.add(EquipItem(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(pStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return itemList;
+    }
     @Override
     public BigDecimal getItemPrice(String itemId) {
         BigDecimal price = BigDecimal.valueOf(0);

@@ -1,16 +1,13 @@
 <%@ include file="../common/IncludeTop.jsp"%>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/cartChange.js"></script>
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
-</div>
-<%-------------------------------------------------%>
+
 <div class="container">
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-8">
 			<h2>Shopping Cart</h2>
 			<hr>
-			<table id="cartTable">
+			<table id="cartTable" class="simple-table">
 				<thead>
 				<tr>
 					<th>Picture</th>
@@ -33,15 +30,15 @@
 							<a href="${pageContext.request.contextPath}/shop/view/item?itemId=${cartItem.item.itemId}">${cartItem.item.itemId}</a>
 						</td>
 						<td>
-							${cartItem.item.product.productId}
+								${cartItem.item.product.productId}
 						</td>
 						<td>
-							${cartItem.item.attribute1}
-							${cartItem.item.attribute2}
-							${cartItem.item.attribute3}
-							${cartItem.item.attribute4}
-							${cartItem.item.attribute5}
-							${cartItem.item.product.name}
+								${cartItem.item.attribute1}
+								${cartItem.item.attribute2}
+								${cartItem.item.attribute3}
+								${cartItem.item.attribute4}
+								${cartItem.item.attribute5}
+								${cartItem.item.product.name}
 						</td>
 						<td>
 							<input type="number" id="quantity" name="${cartItem.item.itemId}" value="${cartItem.quantity}" min="1" onblur="updateCart(this.parentElement.parentElement)">
@@ -51,9 +48,9 @@
 							<fmt:formatNumber value="${cartItem.item.listPrice}" pattern="$#,##0.00" />
 						</td>
 						<td>
-							<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
+								<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
 						<td>
-<%--						<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-outline-dark">Remove</button>	--%>
+								<%--						<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-outline-dark">Remove</button>	--%>
 							<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-dark">Remove</button>
 						</td>
 					</tr>
@@ -84,7 +81,6 @@
 <script>
 	let arequestUrl="${pageContext.request.contextPath}/rest/shop/removecart/item";
 	function removeBtnClicked(btnEle){
-		console.log("removeBtnClicked");
 		let trEle=btnEle.parentNode.parentNode;
 		let itemId = trEle.children[1].children[0].innerHTML;
 		removeItemFromCart("carTableTbody",itemId,trEle);

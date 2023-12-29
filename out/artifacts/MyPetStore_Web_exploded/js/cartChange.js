@@ -1,6 +1,5 @@
 //remove item from cart
 function removeItemFromCart(tableId,itemId,trEle) {
-    console.log("removeItemFromCart");
     //先发axios请求，再删除
     axios.get(removeItemFromCartUrl,{
         params:{
@@ -8,13 +7,13 @@ function removeItemFromCart(tableId,itemId,trEle) {
         }
     }).then(function (response) {
         if(response.data.code==0){
-            console.log(response.data);
-            alert("删除成功");
-            //删除表格中的行
-            console.log(trEle);
             let table = document.getElementById(tableId);
+            let totalPriceEle = table.querySelector("#subtotal");
+            let totalPrice = parseFloat(totalPriceEle.innerText.replace("$",""));
+            let itemPrice = parseFloat(trEle.cells[6].innerText.replace("$",""));
+            totalPriceEle.innerText = "$"+(totalPrice-itemPrice);
             table.removeChild(trEle);
-            console.log("trEle removed")
+            alert("删除成功");
         }else{
             alert("删除失败");
         }

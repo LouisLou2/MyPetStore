@@ -8,3 +8,5 @@ var updateCartUrl=contextPath+"/rest/shop/updatecart/item";
 var restUpdateAccountUrl=contextPath+"/rest/account/update";
 var searchProductBasicInfoUrl=contextPath+"/rest/shop/view/product_basic_list";
 var viewProductUrl=contextPath+"/shop/view/product";
+var getItemsShownAtHomePageUrl=contextPath+"/rest/shop/view/simple-item";
+var jmpToViewItemUrl=contextPath+"/shop/view/item?itemId=";

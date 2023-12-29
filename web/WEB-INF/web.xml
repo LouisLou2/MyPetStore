@@ -97,12 +97,20 @@
         <servlet-name>CategoryInfoServlet</servlet-name>
         <url-pattern>/rest/shop/view/category</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>OrderInfoServlet</servlet-name>
         <servlet-class>org.csu.mypetstore.web.servlets.restful.OrderInfoServlet</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>ItemShownAtHomePage</servlet-name>
+        <url-pattern>/rest/shop/view/simple-item</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ItemShownAtHomePage</servlet-name>
+        <servlet-class>org.csu.mypetstore.web.servlets.restful.ItemShownAtHomePage</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>OrderInfoServlet</servlet-name>
         <url-pattern>/rest/shop/view/orderlist</url-pattern>
@@ -273,17 +281,6 @@
         <url-pattern>/rest/account/update</url-pattern>
     </servlet-mapping>
     
-    <!--?跳转-->
-    <servlet>
-        <servlet-name>JPetStoreDemoServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.JPetStoreDemoServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JPetStoreDemoServlet</servlet-name>
-        <url-pattern>/jPetStoreDemo</url-pattern>
-    </servlet-mapping>
-
-    <!--跳1-->
     <servlet>
         <servlet-name>ShippingFormServlet</servlet-name>
         <servlet-class>org.csu.mypetstore.web.servlets.ShippingFormServlet</servlet-class>

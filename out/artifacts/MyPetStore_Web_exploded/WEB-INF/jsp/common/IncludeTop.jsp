@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Summer
-  Date: 2018/12/10
-  Time: 15:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -12,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script>
-        var contextPath = '${pageContext.request.contextPath }';
+        var contextPath = '${pageContext.request.contextPath}';
     </script>
     <script src="${pageContext.request.contextPath }/js/locationCollection.js"></script>
     <script src="${pageContext.request.contextPath }/js/signIn.js"></script>
@@ -25,7 +18,6 @@
     <script src="${pageContext.request.contextPath }/js/generic_tools.js"></script>
     <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/jpetstore.css" type="text/css" media="screen" />
     <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/searchProduct.css" type="text/css" media="screen" />
-    <link rel="StyleSheet" href="${pageContext.request.contextPath }/css/cartChange.css" type="text/css" media="screen" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
@@ -38,11 +30,6 @@
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="Pragma" content="no-cache" />
-    <style>
-        .selector-for-some-widget {
-            box-sizing: content-box;
-        }
-    </style>
 </head>
 
 <body>
@@ -57,7 +44,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-<%--                Home--%>
                 <li class="nav-item active">
                     <a class="nav-link" href="${pageContext.request.contextPath}/main">Home <span class="sr-only">(current)</span></a>
                 </li>

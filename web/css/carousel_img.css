@@ -1,0 +1,67 @@
+.banner {
+    width: 800px;
+    height: 350px;
+    position: relative;
+    border: 1px beige;
+    margin: 10px auto;
+}
+.banner .wrap {
+    width: 100%;
+}
+.banner .wrap .item {
+    width: 100%;
+}
+.item img {
+    width: 800px;
+    height: 350px;
+    border-radius: 10px;
+    vertical-align: top;
+    position: absolute;
+}
+.div1 {
+    position: relative;
+    left: 0;
+    top: 50%;
+    transform: translatey(-50%);
+    cursor: pointer;
+    width: 41px;
+    height: 69px;
+    font-size: 30px;
+    line-height: 70px;
+    text-align: center;
+    color: #D6D8D4;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.div2 {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%);
+    cursor: pointer;
+    width: 41px;
+    height: 69px;
+    font-size: 30px;
+    line-height: 70px;
+    text-align: center;
+    color: #D6D8D4;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.pagination {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    bottom: 40px;
+}
+.pagination>div {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.pagination>div:last-child {
+    margin-right: 0;
+}

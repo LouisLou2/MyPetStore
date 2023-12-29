@@ -97,11 +97,11 @@ function sendEmailCodeClicked(targetElement,aexpectation) {
 }
 function setTime(targetElement) {
     //倒计时初始化秒数
-    var countdown = 60;
-    var id = setInterval(setCountdown, 1000, targetElement);
+    let countdown = 60;
+    let id = setInterval(setCountdown, 1000, targetElement);
     //设置倒计时
     function setCountdown(targetElement) {
-        if (countdown == 0) {
+        if (countdown === 0) {
             targetElement.removeAttribute("disabled");
             targetElement.innerHTML = "Send Code";
             countdown = 60;
