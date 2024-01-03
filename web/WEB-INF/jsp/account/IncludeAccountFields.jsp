@@ -13,12 +13,6 @@
 		<td>Email:</td>
 		<td><input type="text" size="40" name="email" value="${sessionScope.account.email}" /></td>
 	</tr>
-<%--	<tr>--%>
-<%--		<td>EmailCode:</td>--%>
-<%--		<td><input type="text" size="40" name="emailcode" value="${sessionScope.account.email}" /></td>--%>
-<%--		<td><input type="button" id="emailcodeBtn" value="Get Email Code" onclick="sendEmailCodeClicked(this)" /></td>--%>
-<%--		<p><span id="emailcodeTime">60</span>秒后重获取</p>--%>
-<%--	</tr>--%>
 	<tr>
 		<td>Phone:</td>
 		<td><input type="text" name="phone" value="${sessionScope.account.phone}" /></td>
@@ -85,22 +79,19 @@
 </table>
 	<script type="text/javascript">
 		function isEmailValid(email) {
-			const EMAIL_REGEX = /[\w\.\-]+@([\w\-]+\.)+[\w\-]+/;
+			const EMAIL_REGEX = /[\w\-]+@([\w\-]+\.)+[\w\-]+/;
 			return EMAIL_REGEX.test(email);
 		}
 		function sendEmailCodeClicked(targetElement) {
 			//获取输入的邮箱
-			setTime(targetElement);
-			let url= "${pageContext.request.contextPath}/verify/get_email_code";
 			let email = document.getElementsByName("email")[0].value;
 			console.log(email);
 			if(!isEmailValid(email)){
-				console.log("The Email Address is Invalid!");
 				alert("The Email Address is Invalid!");
 				return;
 			}
 			axios.request({
-				url: url,
+				url: verifyEmailCodeUrl,
 				method: 'get',
 				params: {
 					email: email
@@ -108,7 +99,9 @@
 			}).then(function (response) {
 				if(parseInt(response.data.code) !== 0){
 					alert(response.data.error);
+					return;
 				}
+				setTime(targetElement);
 			}).catch(function (error) {
 				console.log(error);
 			})
@@ -119,7 +112,7 @@
 			var id = setInterval(setCountdown, 1000, targetElement);
 			//设置倒计时
 			function setCountdown(targetElement) {
-			if (countdown == 0) {
+			if (countdown === 0) {
 			targetElement.removeAttribute("disabled");
 			targetElement.value = "Get Email Code";
 			countdown = 60;

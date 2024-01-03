@@ -1,14 +1,14 @@
 var contextPath=document.getElementById("contextPath").innerHTML;
-function changeImg(id) {
-    console.log("changeImg");
+function changeImg(img_ele) {
+    console.log("enter");
+    console.log(img_ele);
     axios.request({
     url: imgCodeUrl,
     method: 'get',
     responseType: 'blob'
     }).then(function (response) {
-        console.log("get response");
-        var img = document.getElementById(id);
-        img.src = URL.createObjectURL(response.data);
+        img_ele.src = URL.createObjectURL(response.data);
+        console.log(img_ele.src);
     }).catch(function (error) {
         console.log(error);
     });
@@ -51,15 +51,13 @@ function getFields(formElements){
     }
     return formDataObject;
 }
-function signIn(formid,url,preparedParams=undefined) {
+function signIn(formid,url,img_ele,preparedParams=undefined) {
     // 获取表单元素
     var form = document.getElementById(formid);
     if(hasBlank(form.elements)){
         console.log("has blank fields");
         return;
     }
-    console.log(form.method);
-    console.log(form.action);
     // 获取表单中的所有输入字段
     let formElements = form.elements;
     let formDataObject= getFields(formElements);
@@ -80,10 +78,11 @@ function signIn(formid,url,preparedParams=undefined) {
         console.log(response);
         if(response.data.code==1){
             alert(response.data.loadings.error);
+            changeImg(img_ele);
             return;
         }
         let newLocation = response.data.location;
-        if(newLocation==null||newLocation==undefined||newLocation.trim()===""){
+        if(newLocation == null||newLocation.trim()===""){
             newLocation=localStorage.getItem('originalLink');
         }
         console.log("at:verification.signIn "+newLocation);

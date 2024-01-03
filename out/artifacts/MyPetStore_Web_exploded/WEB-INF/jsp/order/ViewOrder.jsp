@@ -1,14 +1,5 @@
 <%@ include file="../common/IncludeTop.jsp"%>
 
-<div id="Content">
-	<ul class="messages">
-		<li>${requestScope.message}</li>
-	</ul>
-
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
-</div>
-
 <div class="container">
 	<div class="container text-center">
 		<div class="row">

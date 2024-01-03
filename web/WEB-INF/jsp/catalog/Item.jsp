@@ -133,8 +133,7 @@
 			return false;
 		}
 	}
-	//不用jquery
-	let url="${pageContext.request.contextPath}/rest/shop/addcart/item";
+	//let url="${pageContext.request.contextPath}/rest/shop/addcart/item";
 	function queryAddItemToCart(){
 		var num = document.getElementById("addnumber").value;
 		if(num==null||num==""||!checkNumber(num)){
@@ -142,7 +141,7 @@
 			return;
 		}
 		axios.request({
-			url:url,
+			url:addItemToCartURl,
 			method:'post',
 			params:{
 				itemId:"${requestScope.item.itemId}",
@@ -150,19 +149,14 @@
 			}
 		}).then(function(response){
 			let code=response.data.code;
-			console.log(code);
-			console.log("at top");
-			if(code==0){
-				console.log("at 0");
+			if(code===0){
 				showSuccessAlert("addResultTip",addSuccessMsg);
 				return;
 			}
-			if(code==3){
-				console.log("at 3");
+			if(code===3){
 				showModal("#signInModal");
 				return;
 			}
-			console.log("at bottom");
 			showFailAlert("addResultTip",response.data.loadings.error);
 		}).catch(function(error){
 			alert(error);

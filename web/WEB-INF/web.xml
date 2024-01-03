@@ -3,14 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
-
-    <!--静态展示页面-->
-    <!--
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
-    -->
     <filter>
         <filter-name>AccountFilter</filter-name>
         <filter-class>org.csu.mypetstore.web.filter.AccountFilter</filter-class>
@@ -80,7 +72,7 @@
     <!--配置ViewCategoryServlet-->
     <servlet>
         <servlet-name>ViewCategoryServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewCategoryServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewCategoryServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -149,7 +141,7 @@
     <!--配置ViewProductServlet-->
     <servlet>
         <servlet-name>ViewProductServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewProductServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewProductServlet</servlet-name>
@@ -158,7 +150,7 @@
 
     <servlet>
         <servlet-name>ViewItemServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewItemServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewItemServlet</servlet-name>
@@ -167,7 +159,7 @@
 
     <servlet>
         <servlet-name>SearchProductServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.SearchProductServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.search.SearchProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchProductServlet</servlet-name>
@@ -176,7 +168,7 @@
 
     <servlet>
         <servlet-name>AddItemToCartServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.AddItemToCartServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.cart.AddItemToCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddItemToCartServlet</servlet-name>
@@ -185,7 +177,7 @@
 
     <servlet>
         <servlet-name>ViewCartServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewCartServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewCartServlet</servlet-name>
@@ -194,7 +186,7 @@
 
     <servlet>
         <servlet-name>RemoveItemFromCartServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.RemoveItemFromCartServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.cart.RemoveItemFromCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RemoveItemFromCartServlet</servlet-name>
@@ -213,7 +205,7 @@
     <!--更新购物车数量-->
     <servlet>
         <servlet-name>UpdateCartQuantitiesServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.UpdateCartQuantitiesServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.cart.UpdateCartQuantitiesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateCartQuantitiesServlet</servlet-name>
@@ -223,7 +215,7 @@
     <!--登录跳转配置-->
     <servlet>
         <servlet-name>SignInFormServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.SignInFormServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.SignInFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignInFormServlet</servlet-name>
@@ -233,7 +225,7 @@
     <!--登录配置-->
     <servlet>
         <servlet-name>SignInServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.SignInServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.SignInServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignInServlet</servlet-name>
@@ -243,7 +235,7 @@
     <!--登出账户-->
     <servlet>
         <servlet-name>SignOffServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.SignOffServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.SignOffServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignOffServlet</servlet-name>
@@ -253,7 +245,7 @@
     <!--编辑账户信息-->
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.EditAccountServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.EditAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditAccountServlet</servlet-name>
@@ -263,7 +255,7 @@
     <!--注册表单-->
     <servlet>
         <servlet-name>RegisterFormServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.RegisterFormServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.RegisterFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterFormServlet</servlet-name>
@@ -273,7 +265,7 @@
     <!--注册-->
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.RegisterServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -283,7 +275,7 @@
     <!--账号信息更改-->
     <servlet>
         <servlet-name>UpdateAccountServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.UpdateAccountServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.account.UpdateAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateAccountServlet</servlet-name>
@@ -292,7 +284,7 @@
     
     <servlet>
         <servlet-name>ShippingFormServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ShippingFormServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.order.ShippingFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShippingFormServlet</servlet-name>
@@ -302,7 +294,7 @@
     <!--跳转到生成订单表-->
     <servlet>
         <servlet-name>NewOrderFormServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.NewOrderFormServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.order.NewOrderFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewOrderFormServlet</servlet-name>
@@ -312,7 +304,7 @@
     <!--跳往到确定订单-->
     <servlet>
         <servlet-name>ConfirmOrderFormServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ConfirmOrderFormServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.order.ConfirmOrderFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ConfirmOrderFormServlet</servlet-name>
@@ -331,7 +323,7 @@
     <!--查看最终订单-->
     <servlet>
         <servlet-name>ViewOrderServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewOrderServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewOrderServlet</servlet-name>
@@ -341,7 +333,7 @@
     <!--更改地址-->
     <servlet>
         <servlet-name>ShippingAddressServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ShippingAddressServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.order.ShippingAddressServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShippingAddressServlet</servlet-name>
@@ -351,7 +343,7 @@
     <!--查看订单列表-->
     <servlet>
         <servlet-name>ViewListOrderServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.ViewListOrderServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.ViewListOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewListOrderServlet</servlet-name>
@@ -361,7 +353,7 @@
     <!--验证码设置-->
     <servlet>
         <servlet-name>VerificationCodeServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.VerifacationCodeServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.verify.VerifacationCodeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>VerificationCodeServlet</servlet-name>
@@ -376,34 +368,6 @@
         <servlet-name>EmailCodeServlet</servlet-name>
         <url-pattern>/rest/verify/get_email_code</url-pattern>
     </servlet-mapping>
-    
-    <!--参数检验-->
-    <servlet>
-        <servlet-name>VerifacationServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.VerificationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>VerifacationServlet</servlet-name>
-        <url-pattern>/verify/check</url-pattern>
-    </servlet-mapping>
-    <!--日志检验-->
-    <servlet>
-        <servlet-name>Log4InitServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.Log4InitServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Log4InitServlet</servlet-name>
-        <url-pattern>/log4Init</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.LogServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogServlet</servlet-name>
-        <url-pattern>/logServlet</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>CheckExistServlet</servlet-name>
@@ -416,7 +380,7 @@
 
     <servlet>
         <servlet-name>FindResultServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.FindResultServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.showinfo.search.FindResultServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FindResultServlet</servlet-name>
@@ -425,20 +389,11 @@
 
     <servlet>
         <servlet-name>UpdateCartJSServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.UpdateCartServlet</servlet-class>
+        <servlet-class>org.csu.mypetstore.web.servlets.cart.UpdateCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateCartJSServlet</servlet-name>
         <url-pattern>/updateCartJSServlet</url-pattern>
     </servlet-mapping>
-
-    <!--鼠标移动，商品悬浮窗信息展示-->
-    <servlet>
-        <servlet-name>CategoryShowJsServlet</servlet-name>
-        <servlet-class>org.csu.mypetstore.web.servlets.CategoryShowJsServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CategoryShowJsServlet</servlet-name>
-        <url-pattern>/categoryShowJsServlet</url-pattern>
-    </servlet-mapping>
+    
 </web-app>

@@ -1,18 +1,21 @@
 //remove item from cart
-function removeItemFromCart(tableId,itemId,trEle) {
+function removeItemFromCart(tableId,btnEle,submitEle) {
+    let trEle=btnEle.parentNode.parentNode;
+    let itemId = trEle.children[1].children[0].innerHTML;
     //先发axios请求，再删除
     axios.get(removeItemFromCartUrl,{
         params:{
             itemId:itemId
         }
     }).then(function (response) {
-        if(response.data.code==0){
+        if(response.data.code===0){
             let table = document.getElementById(tableId);
             let totalPriceEle = table.querySelector("#subtotal");
             let totalPrice = parseFloat(totalPriceEle.innerText.replace("$",""));
             let itemPrice = parseFloat(trEle.cells[6].innerText.replace("$",""));
             totalPriceEle.innerText = "$"+(totalPrice-itemPrice);
             table.removeChild(trEle);
+            if(totalPrice-itemPrice===0)submitEle.classList.add("disabled");
             alert("删除成功");
         }else{
             alert("删除失败");
@@ -49,7 +52,7 @@ function updateCart(therow){
             quantity:quantity
         }
     }).then(function (response) {
-        if(response.data.code==0){
+        if(response.data.code===0){
             let totalPriceStr = "$"+response.data.loadings.totalPrice;
             let totalPrice = parseFloat(totalPriceStr.replace("$",""));
             //更新总价

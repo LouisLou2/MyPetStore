@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.csu.mypetstore.constant.enums.ErrorEnum;
 import org.csu.mypetstore.constant.enums.ResultCodeEnum;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.LineItem;
@@ -18,17 +19,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfirmOrderServlet extends HttpServlet {
+    private static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestResponse restResponse = new RestResponse();
+        HttpSession session = req.getSession();
+        Object theOrder=session.getAttribute("order");
+        if(theOrder==null){
+            req.setAttribute("error", ErrorEnum.ShopError.ORDER_NOTEXIST.getMessage());
+            req.getRequestDispatcher(ERROR).forward(req, resp);
+            return;
+        }
         restResponse.setCode(ResultCodeEnum.SUCCESS);
-        String orderId=null;
+        String orderId;
+        Order order=(Order)theOrder;
         try{
-            HttpSession session = req.getSession();
-            //拿到订单对象
-            Order order = (Order) session.getAttribute("order");
             //删除session中的订单对象
             session.removeAttribute("order");
+            //session.setAttribute("infoFilled", false);
             Account account = (Account) req.getSession().getAttribute("account");
             List<String>itemIdList =new ArrayList<>();
             for (LineItem lineItem:  order.getLineItems()) {

@@ -9,7 +9,6 @@ public enum ErrorEnum {
         PHONECODE(3,"手机验证码错误"),
         NOTMATCH(4,"用户名或密码错误"),
         NOTEXIST(5,"用户不存在");
-            
         private int code;
         private String message;
         VerificationError(int i, String s) {
@@ -75,7 +74,9 @@ public enum ErrorEnum {
     }
     public enum ShopError{
         INSUFFICIENT(1,"库存不足"),
-        INVALID_PARAM(2,"参数错误");
+        INVALID_PARAM(2,"参数错误"),
+        EMPTY_CART(3,"Empty Shopping Cart!"),
+        ORDER_NOTEXIST(4,"Order has already been Confirmed or it doesn't exist");
         private int code;
         private String message;
         ShopError(int i, String s) {

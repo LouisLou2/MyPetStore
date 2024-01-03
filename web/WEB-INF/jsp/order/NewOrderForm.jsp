@@ -138,9 +138,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/verification.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/register.js"></script>
 <script>
-	var shippingArea = document.getElementById("shippingArea");
-	var shippingAreaInputs = shippingArea.getElementsByTagName("input");
-	var shippingAreaChecker = document.getElementById("shippingAreaChecker");
+	let shippingArea = document.getElementById("shippingArea");
+	let shippingAreaInputs = shippingArea.getElementsByTagName("input");
+	let shippingAreaChecker = document.getElementById("shippingAreaChecker");
 	function shippingAreaChange() {
 		if (shippingAreaChecker.checked) {
 			shippingArea.style.display = 'block';

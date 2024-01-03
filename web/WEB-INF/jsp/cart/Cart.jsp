@@ -4,10 +4,10 @@
 <div class="container">
 	<div class="row">
 		<div class="col"></div>
-		<div class="col-8">
+		<div class="col-12">
 			<h2>Shopping Cart</h2>
 			<hr>
-			<table id="cartTable" class="simple-table">
+			<table id="cartTable" class="simple-table" style="align-self: center">
 				<thead>
 				<tr>
 					<th>Picture</th>
@@ -51,7 +51,7 @@
 								<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
 						<td>
 								<%--						<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-outline-dark">Remove</button>	--%>
-							<button type="button" name="remove" onclick="removeBtnClicked(this)" class="btn btn-dark">Remove</button>
+							<button type="button" name="remove" onclick="removeBtnClicked(this)">Remove</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -66,10 +66,8 @@
 			</table>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-3"> <!-- 设置您想要的宽度，例如 col-6 -->
-                        <c:if test="${requestScope.cart.numberOfItems > 0}">
-                            <a class="btn btn-success" role="button" href="${pageContext.request.contextPath}/page/shop/newOrder">Checkout</a>
-                        </c:if>
+                    <div class="col-3">
+						<a id="checkoutBtn" class="btn btn-success <c:if test="${requestScope.cart.numberOfItems == 0}">disabled</c:if> " role="button" href="${pageContext.request.contextPath}/page/shop/newOrder">Checkout</a>
                     </div>
                 </div>
             </div>
@@ -79,11 +77,9 @@
 </div>
 <%-------------------------------------------------%>
 <script>
-	let arequestUrl="${pageContext.request.contextPath}/rest/shop/removecart/item";
 	function removeBtnClicked(btnEle){
-		let trEle=btnEle.parentNode.parentNode;
-		let itemId = trEle.children[1].children[0].innerHTML;
-		removeItemFromCart("carTableTbody",itemId,trEle);
+		let submitEle=document.getElementById("checkoutBtn");
+		removeItemFromCart("carTableTbody",btnEle,submitEle);
 	}
 	//为什么添加click事件监听仍然没反应
 </script>

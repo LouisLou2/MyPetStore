@@ -64,7 +64,7 @@ function giveTip(code) {
     }
 }
 function isEmailValid(email) {
-    const EMAIL_REGEX = /[\w\.\-]+@([\w\-]+\.)+[\w\-]+/;
+    const EMAIL_REGEX = /[\w\-]+@([\w\-]+\.)+[\w\-]+/;
     return EMAIL_REGEX.test(email);
 }
 function sendEmailCodeClicked(targetElement,aexpectation) {
@@ -75,13 +75,8 @@ function sendEmailCodeClicked(targetElement,aexpectation) {
         return;
     }
     //获取输入的邮箱
-    setTime(targetElement);
-    let url= emailCodeUrl;
-    console.log(email);
-    console.log("aexpectation");
-    console.log(aexpectation);
     axios.request({
-        url: url,
+        url: emailCodeUrl,
         method: 'get',
         params: {
             email: email,
@@ -90,7 +85,10 @@ function sendEmailCodeClicked(targetElement,aexpectation) {
     }).then(function (response) {
         if(parseInt(response.data.code) !== 0){
             alert(response.data.loadings.error);
+            return;
         }
+        console.log("prepare timer");
+        setTime(targetElement);
     }).catch(function (error) {
         console.log(error);
     })

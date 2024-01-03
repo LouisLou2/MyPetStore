@@ -1,7 +1,4 @@
 <%@ include file="../common/IncludeTop.jsp"%>
-<div id="BackLink">
-	<a href="${pageContext.request.contextPath}/main">Return to Main Menu</a>
-</div>
 <div class="container">
 	<div class="container text-center">
 		<div class="row">
@@ -120,7 +117,7 @@
 			}
 		}).then(function (response) {
 			console.log(response);
-			if (response.data.code==0) {
+			if (response.data.code===0) {
 				alert("Order confirmed!");
 			} else {
 				alert(response.data.loadings.error);

@@ -85,22 +85,19 @@
 </table>
 	<script type="text/javascript">
 		function isEmailValid(email) {
-			const EMAIL_REGEX = /[\w\.\-]+@([\w\-]+\.)+[\w\-]+/;
+			const EMAIL_REGEX = /[\w\-]+@([\w\-]+\.)+[\w\-]+/;
 			return EMAIL_REGEX.test(email);
 		}
 		function sendEmailCodeClicked(targetElement) {
 			//获取输入的邮箱
-			setTime(targetElement);
-			let url= "${pageContext.request.contextPath}/verify/get_email_code";
 			let email = document.getElementsByName("email")[0].value;
 			console.log(email);
 			if(!isEmailValid(email)){
-				console.log("The Email Address is Invalid!");
 				alert("The Email Address is Invalid!");
 				return;
 			}
 			axios.request({
-				url: url,
+				url: verifyEmailCodeUrl,
 				method: 'get',
 				params: {
 					email: email
@@ -108,7 +105,9 @@
 			}).then(function (response) {
 				if(parseInt(response.data.code) !== 0){
 					alert(response.data.error);
+					return;
 				}
+				setTime(targetElement);
 			}).catch(function (error) {
 				console.log(error);
 			})

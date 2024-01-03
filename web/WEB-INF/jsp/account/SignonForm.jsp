@@ -73,20 +73,18 @@
 	let img_code=document.getElementById("img_code");
 	img_code.src=imgCodeUrl;
 	img_code.addEventListener("click", function (e) {
-		console.log("Listener");
 		e.preventDefault(); // 防止链接的默认行为（刷新页面）
-		changeImg("img_code");
+		changeImg(img_code);
 	});
 	let url = "${pageContext.request.contextPath }/rest/account/signin";
-	var preparedParams={
-	}
+	let preparedParams={}
 	if(localStorage.getItem('active')!=null){
 		preparedParams["active"]='1';
 		localStorage.removeItem('active');
 	}
 	function submitClicked(signinWay,formId){
 		preparedParams["signinWay"]=signinWay;
-		signIn(formId,url,preparedParams);
+		signIn(formId,url,img_code,preparedParams);
 	}
 	function donthaveAccountClicked(){
 		localStorage.setItem('active','1');

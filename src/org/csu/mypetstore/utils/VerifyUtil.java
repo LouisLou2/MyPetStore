@@ -7,8 +7,6 @@ public class VerifyUtil {
     private static final String codeChars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String codeNum="0123456789";
     public static String getVerifyCode(){
-        int width=60;
-        int height=20;
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<4;i++){
             int rand=(int) (Math.random() *36);
@@ -17,8 +15,6 @@ public class VerifyUtil {
         return sb.toString();
     }
 public static String getVerifyCodeNumber(){
-        int width=60;
-        int height=20;
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<4;i++){
             int rand=(int) (Math.random() *10);
@@ -38,11 +34,9 @@ public static String getVerifyCodeNumber(){
          */
         g.setColor(new Color(0xDCDCDC));
         g.fillRect(0, 0, width, height);
-
         /*
          * 随机产生120个干扰点
          */
-
         for(int i=0;i<120;i++){
             int x=(int)(Math.random()*width);
             int y=(int)(Math.random()*height);

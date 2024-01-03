@@ -4,7 +4,7 @@ function hideAlert(alertId){
     alert.style.display = "none";
 }
 function showSuccessAlert(alertId,alertMsg){
-    var alert = document.getElementById(alertId);
+    let alert = document.getElementById(alertId);
     if(alert.classList.contains("alert-danger")){
         alert.classList.remove("alert-danger");
     }
@@ -17,7 +17,7 @@ function showSuccessAlert(alertId,alertMsg){
     showAlert(alert,alertMsg)
 }
 function showFailAlert(alertId,alertMsg){
-    var alert = document.getElementById(alertId);
+    let alert = document.getElementById(alertId);
     if(alert.classList.contains("alert-success")){
         alert.classList.remove("alert-success");
     }
