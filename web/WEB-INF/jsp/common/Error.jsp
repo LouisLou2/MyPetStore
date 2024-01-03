@@ -29,7 +29,7 @@
          </p>
       </section>
       <section class="paraLine">
-         this is the error page.
+         ${requestScope.error}
       </section>
    </section>
 </div>
